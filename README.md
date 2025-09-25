@@ -1,2 +1,0 @@
-# Go-Farming
-Case Study
