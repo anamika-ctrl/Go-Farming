@@ -1,703 +1,224 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Go Farming – Case Study</title><style>
-/* cspell:disable-file */
-/* webkit printing magic: print all background colors */
-html {
-	-webkit-print-color-adjust: exact;
-}
-* {
-	box-sizing: border-box;
-	-webkit-print-color-adjust: exact;
-}
-
-html,
-body {
-	margin: 0;
-	padding: 0;
-}
-@media only screen {
-	body {
-		margin: 2em auto;
-		max-width: 900px;
-		color: rgb(55, 53, 47);
-	}
-}
-
-body {
-	line-height: 1.5;
-	white-space: pre-wrap;
-}
-
-a,
-a.visited {
-	color: inherit;
-	text-decoration: underline;
-}
-
-.pdf-relative-link-path {
-	font-size: 80%;
-	color: #444;
-}
-
-h1,
-h2,
-h3 {
-	letter-spacing: -0.01em;
-	line-height: 1.2;
-	font-weight: 600;
-	margin-bottom: 0;
-}
-
-.page-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	margin-top: 0;
-	margin-bottom: 0.75em;
-}
-
-h1 {
-	font-size: 1.875rem;
-	margin-top: 1.875rem;
-}
-
-h2 {
-	font-size: 1.5rem;
-	margin-top: 1.5rem;
-}
-
-h3 {
-	font-size: 1.25rem;
-	margin-top: 1.25rem;
-}
-
-.source {
-	border: 1px solid #ddd;
-	border-radius: 3px;
-	padding: 1.5em;
-	word-break: break-all;
-}
-
-.callout {
-	border-radius: 10px;
-	padding: 1rem;
-}
-
-figure {
-	margin: 1.25em 0;
-	page-break-inside: avoid;
-}
-
-figcaption {
-	opacity: 0.5;
-	font-size: 85%;
-	margin-top: 0.5em;
-}
-
-mark {
-	background-color: transparent;
-}
-
-.indented {
-	padding-left: 1.5em;
-}
-
-hr {
-	background: transparent;
-	display: block;
-	width: 100%;
-	height: 1px;
-	visibility: visible;
-	border: none;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-}
-
-img {
-	max-width: 100%;
-}
-
-@media only print {
-	img {
-		max-height: 100vh;
-		object-fit: contain;
-	}
-}
-
-@page {
-	margin: 1in;
-}
-
-.collection-content {
-	font-size: 0.875rem;
-}
-
-.collection-content td {
-	white-space: pre-wrap;
-	word-break: break-word;
-}
-
-.column-list {
-	display: flex;
-	justify-content: space-between;
-}
-
-.column {
-	padding: 0 1em;
-}
-
-.column:first-child {
-	padding-left: 0;
-}
-
-.column:last-child {
-	padding-right: 0;
-}
-
-.table_of_contents-item {
-	display: block;
-	font-size: 0.875rem;
-	line-height: 1.3;
-	padding: 0.125rem;
-}
-
-.table_of_contents-indent-1 {
-	margin-left: 1.5rem;
-}
-
-.table_of_contents-indent-2 {
-	margin-left: 3rem;
-}
-
-.table_of_contents-indent-3 {
-	margin-left: 4.5rem;
-}
-
-.table_of_contents-link {
-	text-decoration: none;
-	opacity: 0.7;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-}
-
-table,
-th,
-td {
-	border: 1px solid rgba(55, 53, 47, 0.09);
-	border-collapse: collapse;
-}
-
-table {
-	border-left: none;
-	border-right: none;
-}
-
-th,
-td {
-	font-weight: normal;
-	padding: 0.25em 0.5em;
-	line-height: 1.5;
-	min-height: 1.5em;
-	text-align: left;
-}
-
-th {
-	color: rgba(55, 53, 47, 0.6);
-}
-
-ol,
-ul {
-	margin: 0;
-	margin-block-start: 0.6em;
-	margin-block-end: 0.6em;
-}
-
-li > ol:first-child,
-li > ul:first-child {
-	margin-block-start: 0.6em;
-}
-
-ul > li {
-	list-style: disc;
-}
-
-ul.to-do-list {
-	padding-inline-start: 0;
-}
-
-ul.to-do-list > li {
-	list-style: none;
-}
-
-.to-do-children-checked {
-	text-decoration: line-through;
-	opacity: 0.375;
-}
-
-ul.toggle > li {
-	list-style: none;
-}
-
-ul {
-	padding-inline-start: 1.7em;
-}
-
-ul > li {
-	padding-left: 0.1em;
-}
-
-ol {
-	padding-inline-start: 1.6em;
-}
-
-ol > li {
-	padding-left: 0.2em;
-}
-
-.mono ol {
-	padding-inline-start: 2em;
-}
-
-.mono ol > li {
-	text-indent: -0.4em;
-}
-
-.toggle {
-	padding-inline-start: 0em;
-	list-style-type: none;
-}
-
-/* Indent toggle children */
-.toggle > li > details {
-	padding-left: 1.7em;
-}
-
-.toggle > li > details > summary {
-	margin-left: -1.1em;
-}
-
-.selected-value {
-	display: inline-block;
-	padding: 0 0.5em;
-	background: rgba(206, 205, 202, 0.5);
-	border-radius: 3px;
-	margin-right: 0.5em;
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
-	white-space: nowrap;
-}
-
-.collection-title {
-	display: inline-block;
-	margin-right: 1em;
-}
-
-.page-description {
-	margin-bottom: 2em;
-}
-
-.simple-table {
-	margin-top: 1em;
-	font-size: 0.875rem;
-	empty-cells: show;
-}
-.simple-table td {
-	height: 29px;
-	min-width: 120px;
-}
-
-.simple-table th {
-	height: 29px;
-	min-width: 120px;
-}
-
-.simple-table-header-color {
-	background: rgb(247, 246, 243);
-	color: black;
-}
-.simple-table-header {
-	font-weight: 500;
-}
-
-time {
-	opacity: 0.5;
-}
-
-.icon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	max-width: 1.2em;
-	max-height: 1.2em;
-	text-decoration: none;
-	margin-right: 0.5em;
-}
-
-img.icon {
-	border-radius: 3px;
-}
-
-.callout img.notion-static-icon {
-	width: 1em;
-	height: 1em;
-}
-
-.user-icon {
-	width: 1.5em;
-	height: 1.5em;
-	border-radius: 100%;
-	margin-right: 0.5rem;
-}
-
-.user-icon-inner {
-	font-size: 0.8em;
-}
-
-.text-icon {
-	border: 1px solid #000;
-	text-align: center;
-}
-
-.page-cover-image {
-	display: block;
-	object-fit: cover;
-	width: 100%;
-	max-height: 30vh;
-}
-
-.page-header-icon {
-	font-size: 3rem;
-	margin-bottom: 1rem;
-}
-
-.page-header-icon-with-cover {
-	margin-top: -0.72em;
-	margin-left: 0.07em;
-}
-
-.page-header-icon img {
-	border-radius: 3px;
-}
-
-.link-to-page {
-	margin: 1em 0;
-	padding: 0;
-	border: none;
-	font-weight: 500;
-}
-
-p > .user {
-	opacity: 0.5;
-}
-
-td > .user,
-td > time {
-	white-space: nowrap;
-}
-
-input[type="checkbox"] {
-	transform: scale(1.5);
-	margin-right: 0.6em;
-	vertical-align: middle;
-}
-
-p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-.image {
-	border: none;
-	margin: 1.5em 0;
-	padding: 0;
-	border-radius: 0;
-	text-align: center;
-}
-
-.code,
-code {
-	background: rgba(135, 131, 120, 0.15);
-	border-radius: 3px;
-	padding: 0.2em 0.4em;
-	border-radius: 3px;
-	font-size: 85%;
-	tab-size: 2;
-}
-
-code {
-	color: #eb5757;
-}
-
-.code {
-	padding: 1.5em 1em;
-}
-
-.code-wrap {
-	white-space: pre-wrap;
-	word-break: break-all;
-}
-
-.code > code {
-	background: none;
-	padding: 0;
-	font-size: 100%;
-	color: inherit;
-}
-
-blockquote {
-	font-size: 1em;
-	margin: 1em 0;
-	padding-left: 1em;
-	border-left: 3px solid rgb(55, 53, 47);
-}
-
-blockquote.quote-large {
-	font-size: 1.25em;
-}
-
-.bookmark {
-	text-decoration: none;
-	max-height: 8em;
-	padding: 0;
-	display: flex;
-	width: 100%;
-	align-items: stretch;
-}
-
-.bookmark-title {
-	font-size: 0.85em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	height: 1.75em;
-	white-space: nowrap;
-}
-
-.bookmark-text {
-	display: flex;
-	flex-direction: column;
-}
-
-.bookmark-info {
-	flex: 4 1 180px;
-	padding: 12px 14px 14px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.bookmark-image {
-	width: 33%;
-	flex: 1 1 180px;
-	display: block;
-	position: relative;
-	object-fit: cover;
-	border-radius: 1px;
-}
-
-.bookmark-description {
-	color: rgba(55, 53, 47, 0.6);
-	font-size: 0.75em;
-	overflow: hidden;
-	max-height: 4.5em;
-	word-break: break-word;
-}
-
-.bookmark-href {
-	font-size: 0.75em;
-	margin-top: 0.25em;
-}
-
-.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
-.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
-.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
-.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
-.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
-.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
-.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
-.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
-.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
-.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
-.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-.highlight-default {
-	color: rgba(44, 44, 43, 1);
-}
-.highlight-gray {
-	color: rgba(128, 125, 120, 1);
-	fill: rgba(128, 125, 120, 1);
-}
-.highlight-brown {
-	color: rgba(159, 118, 90, 1);
-	fill: rgba(159, 118, 90, 1);
-}
-.highlight-orange {
-	color: rgba(204, 121, 47, 1);
-	fill: rgba(204, 121, 47, 1);
-}
-.highlight-yellow {
-	color: rgba(195, 148, 67, 1);
-	fill: rgba(195, 148, 67, 1);
-}
-.highlight-teal {
-	color: rgba(80, 148, 110, 1);
-	fill: rgba(80, 148, 110, 1);
-}
-.highlight-blue {
-	color: rgba(63, 126, 190, 1);
-	fill: rgba(63, 126, 190, 1);
-}
-.highlight-purple {
-	color: rgba(154, 107, 180, 1);
-	fill: rgba(154, 107, 180, 1);
-}
-.highlight-pink {
-	color: rgba(179, 84, 136, 1);
-	fill: rgba(179, 84, 136, 1);
-}
-.highlight-red {
-	color: rgba(201, 85, 73, 1);
-	fill: rgba(201, 85, 73, 1);
-}
-.highlight-default_background {
-	color: rgba(44, 44, 43, 1);
-}
-.highlight-gray_background {
-	background: rgba(42, 28, 0, 0.07);
-}
-.highlight-brown_background {
-	background: rgba(139, 46, 0, 0.086);
-}
-.highlight-orange_background {
-	background: rgba(224, 101, 1, 0.129);
-}
-.highlight-yellow_background {
-	background: rgba(211, 168, 0, 0.137);
-}
-.highlight-teal_background {
-	background: rgba(0, 100, 45, 0.09);
-}
-.highlight-blue_background {
-	background: rgba(0, 111, 200, 0.09);
-}
-.highlight-purple_background {
-	background: rgba(102, 0, 178, 0.078);
-}
-.highlight-pink_background {
-	background: rgba(197, 0, 93, 0.086);
-}
-.highlight-red_background {
-	background: rgba(223, 22, 0, 0.094);
-}
-.block-color-default {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray {
-	color: rgba(128, 125, 120, 1);
-	fill: rgba(128, 125, 120, 1);
-}
-.block-color-brown {
-	color: rgba(159, 118, 90, 1);
-	fill: rgba(159, 118, 90, 1);
-}
-.block-color-orange {
-	color: rgba(204, 121, 47, 1);
-	fill: rgba(204, 121, 47, 1);
-}
-.block-color-yellow {
-	color: rgba(195, 148, 67, 1);
-	fill: rgba(195, 148, 67, 1);
-}
-.block-color-teal {
-	color: rgba(80, 148, 110, 1);
-	fill: rgba(80, 148, 110, 1);
-}
-.block-color-blue {
-	color: rgba(63, 126, 190, 1);
-	fill: rgba(63, 126, 190, 1);
-}
-.block-color-purple {
-	color: rgba(154, 107, 180, 1);
-	fill: rgba(154, 107, 180, 1);
-}
-.block-color-pink {
-	color: rgba(179, 84, 136, 1);
-	fill: rgba(179, 84, 136, 1);
-}
-.block-color-red {
-	color: rgba(201, 85, 73, 1);
-	fill: rgba(201, 85, 73, 1);
-}
-.block-color-default_background {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray_background {
-	background: rgba(240, 239, 237, 1);
-}
-.block-color-brown_background {
-	background: rgba(245, 237, 233, 1);
-}
-.block-color-orange_background {
-	background: rgba(251, 235, 222, 1);
-}
-.block-color-yellow_background {
-	background: rgba(249, 243, 220, 1);
-}
-.block-color-teal_background {
-	background: rgba(232, 241, 236, 1);
-}
-.block-color-blue_background {
-	background: rgba(232, 242, 250, 1);
-}
-.block-color-purple_background {
-	background: rgba(243, 235, 249, 1);
-}
-.block-color-pink_background {
-	background: rgba(250, 233, 241, 1);
-}
-.block-color-red_background {
-	background: rgba(252, 233, 231, 1);
-}
-.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
-.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
-.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
-.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
-.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
-.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
-.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
-.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
-.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
-.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
-
-.checkbox {
-	display: inline-flex;
-	vertical-align: text-bottom;
-	width: 16;
-	height: 16;
-	background-size: 16px;
-	margin-left: 2px;
-	margin-right: 5px;
-}
-
-.checkbox-on {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-
-.checkbox-off {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-	
-</style></head><body><article id="1ec75567-1725-807d-8df3-c47b8622c42b" class="page sans"><header><h1 class="page-title">Go Farming – Case Study</h1><p class="page-description"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><h2 id="27975567-1725-8051-a5f0-f622c59ec4fd" class="">Title: Go Farming – A Community Veggie Sharing App</h2><p id="27975567-1725-80ce-a11f-d6d8808ce0db" class=""><strong>Subtitle:</strong> UI/UX Case Study</p><p id="27975567-1725-80e9-bf5c-c043ac445831" class=""><strong>Role:</strong> UI/UX Designer</p><p id="27975567-1725-80ae-b7a2-eaf3dac57095" class=""><strong>Tools:</strong> Figma</p><p id="27975567-1725-803d-8f02-ecf03a5ae0b9" class=""><strong>Timeline:</strong> 3 Weeks</p><p id="27975567-1725-80c8-834e-c7923557fd22" class=""><strong>Type:</strong> Self-initiated Project</p><hr id="27975567-1725-80f3-b4f0-f10a3e171d91"/><h2 id="27975567-1725-804e-b3c0-f03956323bfb" class="">Problem Statement</h2><p id="27975567-1725-80da-889f-e7e6709c798d" class=""><strong> User Validation Quote:</strong></p><blockquote id="27975567-1725-8082-a6cb-ccdb2e7295aa" class="">“I had 2 kg of tomatoes last month, and half of it spoiled. I wished there was a way to share or sell it to my neighbors.”</blockquote><div id="27975567-1725-80a4-a361-ccdf6a29ec55" class="column-list"><div id="27975567-1725-80ae-bf99-ea6a27d5abfa" style="width:50%" class="column"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-8007-a37d-d2c87b83e07e"><div style="width:100%"><p id="27975567-1725-8071-9837-fee79ff742a0" class=""><strong>❌ Problem:</strong></p><ul id="27975567-1725-800b-a916-f62ce2a616de" class="bulleted-list"><li style="list-style-type:disc">Home growers often waste surplus produce.</li></ul><ul id="27975567-1725-8070-bfa1-daaf4ddcb9bd" class="bulleted-list"><li style="list-style-type:disc">Buyers want fresh, chemical-free vegetables but usually only find bulk market options.</li></ul></div></figure></div><div id="27975567-1725-8062-a356-da64c9d6cca3" style="width:50%" class="column"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-804b-ba9e-e30d88d508b2"><div style="width:100%"><p id="27975567-1725-80af-8c5b-f2b9a589c4d0" class=""><strong>💡 Opportunity:</strong></p><p id="27975567-1725-80ba-9e2f-f2584add6678" class="">Create a hyper-local community app to connect growers and buyers for <strong>small-quantity, fresh trades</strong>.</p><p id="27975567-1725-8032-86e0-f00b91e5968c" class="">
-</p><p id="27975567-1725-8020-8455-f7deafb5e98d" class="">
-</p></div></figure></div></div><hr id="27975567-1725-804b-be6e-ed0c81e6f23a"/><h2 id="27975567-1725-8051-954f-c82c47e87b0b" class="">Research &amp; Insights</h2><div id="27975567-1725-8070-a4bc-fce494ebe317" class="column-list"><div id="27975567-1725-80c8-87cc-cf1ad669f6e7" style="width:33.333333333333336%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-801f-a07c-e748c16b6cf8"><div style="width:100%"><p id="27975567-1725-8071-811b-dfe1bf20dc33" class=""><strong>Observation:</strong> Neighbors already exchange veggies informally, but there is no structured system.</p></div></figure></div><div id="27975567-1725-8072-9c3d-cda5aae462b0" style="width:33.333333333333336%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-80c7-9008-fcb43526a80d"><div style="width:100%"><p id="27975567-1725-8049-bd39-d54dbefa166f" class=""><strong>Competitor Scan:</strong> Grocery apps cater to bulk buying; no focus on home-grown, small quantities.</p></div></figure></div><div id="27975567-1725-80e5-b594-d1a00c7490cf" style="width:33.33333333333333%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-80c9-92b1-d3d3d70395dc"><div style="width:100%"><p id="27975567-1725-80ba-b608-e3ba1c78af4e" class=""><strong>Gap Identified:</strong> No dedicated space for community-based, small-quantity trades.</p></div></figure></div></div><h3 id="27975567-1725-80d0-8126-c9c4fcf00ee4" class="">User Interviews</h3><ul id="27975567-1725-803b-abdc-c633e589cdf2" class="bulleted-list"><li style="list-style-type:disc"><strong>Participants:</strong> 5 balcony/home growers + 3 frequent veggie buyers.</li></ul><ul id="27975567-1725-80ae-8c76-c08e0647c5ac" class="bulleted-list"><li style="list-style-type:disc"><strong>Key Questions:</strong><ol type="1" id="27975567-1725-800b-934a-cd087265ffff" class="numbered-list" start="1"><li>What do you usually do with extra produce?</li></ol><ol type="1" id="27975567-1725-8050-8436-d787016467b0" class="numbered-list" start="2"><li>What challenges do you face when buying small portions of veggies?</li></ol><ol type="1" id="27975567-1725-80dd-887e-cd54aef4b055" class="numbered-list" start="3"><li>How do you prefer to connect with your neighbors for such exchanges?</li></ol></li></ul><ul id="27975567-1725-80f0-bd96-c6519ad68281" class="bulleted-list"><li style="list-style-type:disc"><strong>Key Insights:</strong><ul id="27975567-1725-801e-9822-d7309e07f507" class="bulleted-list"><li style="list-style-type:circle">Growers often give away extras informally but wish for a simple selling option.</li></ul><ul id="27975567-1725-8031-88d0-de0d799f99c3" class="bulleted-list"><li style="list-style-type:circle">Buyers prefer small, fresh portions instead of bulk and want to see <em>nearby availability first</em>.</li></ul><ul id="27975567-1725-808a-92f6-d3cfdcc0aadf" class="bulleted-list"><li style="list-style-type:circle">Trust and simplicity are critical for adoption.</li></ul></li></ul><p id="27975567-1725-80f0-a8fa-e8540d5650b7" class=""><strong>📌 Example Quote:</strong></p><blockquote id="27975567-1725-8003-a154-e4aeda546f54" class="">“I usually give away my extra spinach, but I’d love to sell it for a small price if the process was easy.”</blockquote><hr id="27975567-1725-80b0-a725-fe1ac091ea98"/><h2 id="27975567-1725-80b5-bf23-dbcb6c07a76b" class="">Personas</h2><div id="27975567-1725-8048-830f-d000f67d7f5f" class="column-list"><div id="27975567-1725-8027-802a-c3221343dbee" style="width:50%" class="column"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-80d8-969a-cb93e3eb8327"><div style="width:100%"><p id="27975567-1725-80bf-8b71-cb96291f34ad" class=""><strong>Persona 1 – Sumita (The Grower)</strong></p><ul id="27975567-1725-8060-b01b-f387feefbca5" class="bulleted-list"><li style="list-style-type:disc">Age: 42, Housewife, Guwahati</li></ul><ul id="27975567-1725-808f-9b69-eb5ed23a99e9" class="bulleted-list"><li style="list-style-type:disc">Tech comfort: WhatsApp/OLX user</li></ul><ul id="27975567-1725-80eb-9a33-e02236d1050a" class="bulleted-list"><li style="list-style-type:disc"><strong>Goals:</strong> Share/sell surplus produce, connect with neighbors, avoid waste.</li></ul><ul id="27975567-1725-804d-9d5c-ebe1a7cdfc94" class="bulleted-list"><li style="list-style-type:disc"><strong>Frustrations:</strong> No platform for small sales, complex posting processes.</li></ul></div></figure><p id="27975567-1725-8078-a24e-ef530c22ee0e" class="">
-</p></div><div id="27975567-1725-80c5-84b2-d7f51eddadcc" style="width:50%" class="column"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-80a4-b991-e55b2be40849"><div style="width:100%"><p id="27975567-1725-808e-9ae6-f55f54c763dc" class=""><strong>Persona 2 – Arnab (The Busy Buyer)</strong></p><ul id="27975567-1725-80e4-b7ce-ea955d4e1b92" class="bulleted-list"><li style="list-style-type:disc">Age: 29, Corporate Associate, Bangalore</li></ul><ul id="27975567-1725-8046-b839-db1792693743" class="bulleted-list"><li style="list-style-type:disc">Tech comfort: Regular app user</li></ul><ul id="27975567-1725-806e-8841-cf719b1ba3d3" class="bulleted-list"><li style="list-style-type:disc"><strong>Goals:</strong> Quick access to fresh, organic veggies in small amounts.</li></ul><ul id="27975567-1725-80b7-97a6-edf07fc9b31a" class="bulleted-list"><li style="list-style-type:disc"><strong>Frustrations:</strong> Market veggies lack freshness, doesn’t have time to shop around, wants trusted sources.</li></ul></div></figure></div></div><hr id="27975567-1725-80d1-a3aa-ddef0f5d5daf"/><h2 id="27975567-1725-8022-89cb-cd20ef598610" class="">User Flow &amp; Ideation</h2><figure id="27975567-1725-805f-89f3-c3a32f405ab8" class="image"><a href="BuyerFlow.png"><img style="width:864px" src="BuyerFlow.png"/></a></figure><figure id="27975567-1725-80be-bf3e-c5b9e72138ef" class="image"><a href="SellerFlow.png"><img style="width:864px" src="SellerFlow.png"/></a></figure><hr id="27975567-1725-8005-9962-ff936fb809c2"/><h2 id="27975567-1725-804e-8458-f43c5befb3c2" class="">Design Process</h2><div id="27975567-1725-800b-8e4e-ec5335c16952" class="column-list"><div id="27975567-1725-80bf-b150-fe90157d6611" style="width:31.25%" class="column"><ul id="27975567-1725-80ba-9a8d-fb1e0d652f5b" class="bulleted-list"><li style="list-style-type:disc"><strong>Low-fidelity sketches:</strong> Defined seller and buyer journeys.</li></ul></div><div id="27975567-1725-801d-bda0-dc090366ec53" style="width:68.74999999999997%" class="column"><figure id="27975567-1725-80ed-a770-eb4d80fb3be3" class="image"><a href="buyer-flow.jpg"><img style="width:432px" src="buyer-flow.jpg"/></a></figure><p id="27975567-1725-8006-80fa-e6033ad91b34" class="">
-</p></div></div><div id="27975567-1725-8001-b928-ccf85774e3d7" class="column-list"><div id="27975567-1725-808a-ae61-fd78eef01d55" style="width:31.25%" class="column"><ul id="27975567-1725-80da-a1e9-eb92097bb7fd" class="bulleted-list"><li style="list-style-type:disc"><strong>Wireframes:</strong> Focused on map view &amp; explore tab.</li></ul><p id="27975567-1725-8068-a510-d229e4997e97" class="">
-</p></div><div id="27975567-1725-8026-8fbc-df87669d1e8e" style="width:68.74999999999997%" class="column"><figure id="27975567-1725-809d-9e0c-ddb47e2082bf" class="image"><a href="wireframe.png"><img style="width:144px" src="wireframe.png"/></a></figure></div></div><ul id="27975567-1725-800a-8dcb-d37dfc289b9a" class="bulleted-list"><li style="list-style-type:disc"><strong>Iterations:</strong></li></ul><div id="27975567-1725-80e4-ab8d-ed32a5b3afc8" class="column-list"><div id="27975567-1725-80f7-8ea9-f92047983d1b" style="width:29.166666666666664%" class="column"><figure id="27975567-1725-806a-9da6-f00e8211d673" class="image"><a href="goFarming-home-initial.png"><img style="width:144px" src="goFarming-home-initial.png"/></a></figure></div><div id="27975567-1725-80a3-aad0-ce8633580f2c" style="width:37.500000000000014%" class="column"><figure id="27975567-1725-800e-be6d-cb991d971c4b" class="image"><a href="home3.png"><img style="width:144px" src="home3.png"/></a></figure></div><div id="27975567-1725-803c-b057-fb8a51e456c0" style="width:33.33333333333333%" class="column"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-804b-b5e6-ef8a36773e0e"><div style="width:100%"><ul id="27975567-1725-80b3-a200-e4e931632db5" class="bulleted-list"><li style="list-style-type:disc"><strong>Added Logo</strong><p id="27975567-1725-80ae-bcc7-deb5e85f284b" class="">→ Strengthens identity and branding, making the app feel more polished and real.</p></li></ul></div></figure></div></div><p id="27975567-1725-8050-ad41-f44d070f0176" class="">
-</p><div id="27975567-1725-8096-aac8-c4a14ab23d54" class="column-list"><div id="27975567-1725-80be-af48-db540a9f1270" style="width:25%" class="column"><p id="27975567-1725-809a-b39d-f5b0c4020531" class="">
-</p></div><div id="27975567-1725-807f-a450-e5707a595268" style="width:15.000000000000002%" class="column"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-80fa-acab-e2446268ab9f"><div style="width:100%"><p id="27975567-1725-8065-8eab-cec4566e1091" class=""><strong>Cart → Favorite button</strong></p><p id="27975567-1725-8086-bd8f-f0bba160d64e" class="">→ Clever replacement. Since users aren’t “buying” in bulk, a cart isn’t relevant. Favorites feel more natural (users can bookmark items they like).</p></div></figure></div><div id="27975567-1725-8071-bdde-c133925fc483" style="width:17.500000000000007%" class="column"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-80b2-81ee-da0a42060fa0"><div style="width:100%"><ul id="27975567-1725-80d3-8c10-c59d48658f96" class="bulleted-list"><li style="list-style-type:disc"><strong>Interchanged “My Ads” &amp; “Chat”</strong><p id="27975567-1725-809c-9c61-ca1e0fea3310" class="">→ Improves navigation priority. Buyers/sellers will use chat often, so moving it forward makes sense.</p></li></ul></div></figure></div><div id="27975567-1725-8009-97a3-e50d11f47e39" style="width:16.692476082373943%" class="column"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="27975567-1725-80a4-8012-f8110f57d82a"><div style="width:100%"><ul id="27975567-1725-80a6-8d6a-f25d4e86e3d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Changed “Add to Cart” → “Chat Directly” &amp; “Schedule Pickup”</strong><p id="27975567-1725-808d-aa0a-f095898ddc6d" class="">→ Matches the app’s core need: no centralized checkout, just local coordination. This is a <em>user-driven iteration</em>, not just a UI tweak.</p></li></ul></div></figure></div><div id="27975567-1725-8093-b056-f7e548d4926c" style="width:25.807523917626106%" class="column"><p id="27975567-1725-8031-86ce-d736352d8d0c" class="">
-</p></div></div><hr id="27975567-1725-8004-8974-c57a52c8f225"/><h2 id="27975567-1725-8093-8def-e7cabca196e0" class="">Final Solution</h2><p id="27975567-1725-80b3-a91b-f1178c03e220" class=""><strong>Key Features:</strong></p><div id="27975567-1725-80a9-8e05-e81ae8d3cf2a" class="column-list"><div id="27975567-1725-801e-a641-e610eb7ff509" style="width:25%" class="column"><figure id="27975567-1725-80ad-9c5b-e6c524266bfc" class="image"><a href="home3%201.png"><img style="width:192px" src="home3%201.png"/></a></figure><ul id="27975567-1725-800b-8ed0-ee5e2fb8a98b" class="bulleted-list"><li style="list-style-type:disc"><strong>Profile</strong> → Customize settings &amp; manage listings.</li></ul></div><div id="27975567-1725-8047-999b-e2b60f93cc4e" style="width:25%" class="column"><figure id="27975567-1725-80eb-881f-f85b256fed03" class="image"><a href="map.png"><img style="width:192px" src="map.png"/></a></figure><ul id="27975567-1725-8043-b135-d75c6965ae3e" class="bulleted-list"><li style="list-style-type:disc"><strong>Map View</strong> → Instantly see nearby listings.</li></ul></div><div id="27975567-1725-80ab-9d39-c588dabfbc4c" style="width:25%" class="column"><figure id="27975567-1725-80fa-9754-ceb8ca09ab27" class="image"><a href="chat.png"><img style="width:192px" src="chat.png"/></a></figure><ul id="27975567-1725-8031-aa58-dc1cb2063957" class="bulleted-list"><li style="list-style-type:disc"><strong>Chat</strong> → Direct connection with neighbors.</li></ul></div><div id="27975567-1725-8039-b3ae-c4f39a8a09d9" style="width:25%" class="column"><figure id="27975567-1725-8071-bfc6-c6d293d7ca87" class="image"><a href="explore.png"><img style="width:192px" src="explore.png"/></a></figure><ul id="27975567-1725-80ca-a2d5-ed5766d022b9" class="bulleted-list"><li style="list-style-type:disc"><strong>Explore Tab</strong> → Browse available veggies easily.</li></ul></div></div><hr id="27975567-1725-80ab-8523-c216e2af7a2a"/><h2 id="27975567-1725-8082-a747-d6f553558d9e" class="">Testing &amp; Feedback</h2><ul id="27975567-1725-801d-8d04-caa5f57d3c47" class="bulleted-list"><li style="list-style-type:disc">Users appreciated the <strong>map-first approach</strong> since location was their top concern.</li></ul><ul id="27975567-1725-8096-ac7e-fec4b9641d4e" class="bulleted-list"><li style="list-style-type:disc">Growers liked the <strong>simple listing flow</strong> (upload → publish).</li></ul><ul id="27975567-1725-802b-94e8-dceea0c0b9f1" class="bulleted-list"><li style="list-style-type:disc">Buyers requested <strong>clear pickup scheduling</strong> → added in final version.</li></ul><hr id="27975567-1725-801c-bd78-fe5d63a655ba"/><h2 id="27975567-1725-8054-91ca-d70fbec5dc42" class="">Reflection</h2><ul id="27975567-1725-80b5-a6a5-eeaa4b7e4029" class="bulleted-list"><li style="list-style-type:disc"><strong>User interviews shaped priorities</strong>: Map view became the hero feature since buyers wanted nearby options first.</li></ul><ul id="27975567-1725-80b4-bc42-c3220a0ad59b" class="bulleted-list"><li style="list-style-type:disc"><strong>Key learning</strong>: Simple flows matter more than fancy features; usability drove adoption.</li></ul><ul id="27975567-1725-80dd-b7ff-f43205f2e77b" class="bulleted-list"><li style="list-style-type:disc"><strong>Next steps</strong>: Explore adding delivery options, trust-building features (ratings/reviews), and community recipes to increase engagement.</li></ul><hr id="27975567-1725-809e-ba48-d225c550f25d"/><p id="27975567-1725-806e-b7e3-cff51cbc9c43" class="">✅ <strong>Final Verdict:</strong> Go Farming demonstrates how UX can turn an informal community practice into a structured, scalable solution. This project taught me the importance of <em>real user validation</em> and <em>designing for simplicity</em>. Perfect addition to a portfolio to showcase <strong>end-to-end UX thinking</strong>.</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Farming - UI/UX Case Study</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            color: #2f855a;
+            margin: 0;
+        }
+        .header p {
+            color: #718096;
+            font-size: 1.1em;
+            margin: 5px 0 0;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 4px solid #48bb78;
+            border-radius: 8px;
+        }
+        .section h2 {
+            color: #2f855a;
+            margin-top: 0;
+            font-size: 1.8em;
+            border-bottom: 1px solid #c6f6d5;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        ul li::before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+        }
+        .quote {
+            font-style: italic;
+            border-left: 3px solid #63b3ed;
+            padding-left: 15px;
+            margin: 20px 0;
+            color: #4a5568;
+        }
+        .persona-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+        }
+        .persona {
+            background-color: #e6fffa;
+            border: 1px solid #b2f5ea;
+            padding: 20px;
+            border-radius: 8px;
+            width: 45%;
+        }
+        .persona h3 {
+            color: #2f855a;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        .flow-diagram {
+            text-align: center;
+        }
+        .flow-diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+            }
+            .persona {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Go Farming - A Community Veggie Sharing App</h1>
+            <p>UI/UX Case Study</p>
+        </header>
+
+        <section class="section">
+            <h2>Role, Tools & Timeline</h2>
+            <ul>
+                <li><strong>Role:</strong> UI/UX Designer</li>
+                <li><strong>Tools:</strong> Figma</li>
+                <li><strong>Timeline:</strong> 3 Weeks</li>
+                <li><strong>Type:</strong> Self-initiated Project</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Problem Statement</h2>
+            <p>Home growers often waste surplus produce. Buyers want fresh, chemical-free vegetables but usually only find bulk market options.</p>
+            <div class="quote">
+                <p>"I had 2 kg of tomatoes last month, and half of it spoiled. I wished there was a way to share or sell it to my neighbors."</p>
+            </div>
+            <h3>Opportunity</h3>
+            <p>Create a hyper-local community app to connect growers and buyers for small-quantity, fresh trades.</p>
+        </section>
+
+        <section class="section">
+            <h2>Research & Insights</h2>
+            <ul>
+                <li><strong>Observation:</strong> Neighbors already exchange veggies informally, but there is no structured system.</li>
+                <li><strong>Competitor Scan:</strong> Grocery apps cater to bulk buying; no focus on home-grown, small quantities.</li>
+                <li><strong>Gap Identified:</strong> No dedicated space for community-based, small-quantity trades.</li>
+            </ul>
+            <h3>User Interviews</h3>
+            <ul>
+                <li><strong>Participants:</strong> 5 balcony/home growers + 3 frequent veggie buyers.</li>
+                <li><strong>Key Insights:</strong> Growers often give away extras informally but wish for a simple selling option. Buyers prefer small, fresh portions instead of bulk and want to see nearby availability first. Trust and simplicity are critical for adoption.</li>
+            </ul>
+            <div class="quote">
+                <p>"I usually give away my extra spinach, but I'd love to sell it for a small price if the process was easy."</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Personas</h2>
+            <div class="persona-container">
+                <div class="persona">
+                    <h3>Persona 1 - Sumita (The Grower)</h3>
+                    <ul>
+                        <li><strong>Age:</strong> 42, Housewife, Guwahati</li>
+                        <li><strong>Tech comfort:</strong> WhatsApp/OLX user</li>
+                        <li><strong>Goals:</strong> Share/sell surplus produce, connect with neighbors, avoid waste.</li>
+                        <li><strong>Frustrations:</strong> No platform for small sales, complex posting processes.</li>
+                    </ul>
+                </div>
+                <div class="persona">
+                    <h3>Persona 2 - Arnab (The Busy Buyer)</h3>
+                    <ul>
+                        <li><strong>Age:</strong> 29, Corporate Associate, Bangalore</li>
+                        <li><strong>Tech comfort:</strong> Regular app user</li>
+                        <li><strong>Goals:</strong> Quick access to fresh, organic veggies in small amounts.</li>
+                        <li><strong>Frustrations:</strong> Market veggies lack freshness, doesn't have time to shop around, wants trusted sources.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>User Flow & Ideation</h2>
+            <div class="flow-diagram">
+                <h3>Buyer Flow</h3>
+                <p>Browse → Schedule pickup → Select date & time → Confirm → Chat if needed</p>
+                <h3>Seller Flow</h3>
+                <p>Upload → Add details → Publish Listing</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Design Process</h2>
+            <p>The design process included creating low-fidelity sketches and wireframes to define the seller and buyer journeys. The focus was on a map view and an explore tab. The design evolved through several iterations.</p>
+            <p><strong>Final Solution:</strong> Key features include a **Map View** to instantly see nearby listings and an **Explore Tab** to browse available veggies easily. The **Chat** feature provides a direct connection with neighbors.</p>
+        </section>
+
+        <section class="section">
+            <h2>Testing & Feedback</h2>
+            <ul>
+                <li>Users appreciated the map-first approach since location was their top concern.</li>
+                <li>Growers liked the simple listing flow (upload → publish).</li>
+                <li>Buyers requested clear pickup scheduling, which was added in the final version.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Reflection</h2>
+            <p>User interviews shaped priorities; the map view became the hero feature. A key learning was that simple flows matter more than fancy features, as usability drove adoption.</p>
+            <h3>Next steps</h3>
+            <ul>
+                <li>Explore adding delivery options, trust-building features (ratings/reviews), and community recipes to increase engagement.</li>
+            </ul>
+            <p><strong>Final Verdict:</strong> Go Farming demonstrates how UX can turn an informal community practice into a structured, scalable solution. This project taught me the importance of real user validation and designing for simplicity. Perfect addition to a portfolio to showcase end-to-end UX thinking.</p>
+        </section>
+
+    </div>
+
+</body>
+</html>
