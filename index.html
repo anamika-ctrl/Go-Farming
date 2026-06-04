@@ -7,9 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ════════════════════════════════════════
-       TOKENS
-    ════════════════════════════════════════ */
     :root {
       --ink: #1A1A18;
       --ink-light: #5A6052;
@@ -23,10 +20,16 @@
       --border: #E2DDD3;
       --red-soft: #F5E8E8;
       --red-text: #8B2020;
+      
+      /* Dynamic Side Margins */
+      --side-margin: 160px; /* Equivalent to 160pt for desktop */
+    }
 
-      /* spacing scale */
-      --section-pad: 80px;
-      --col-pad: 24px;
+    /* Switch to 16pt on mobile devices */
+    @media (max-width: 768px) {
+      :root {
+        --side-margin: 16px; 
+      }
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,436 +41,384 @@
       color: var(--ink);
       font-size: 17px;
       line-height: 1.75;
-      overflow-x: hidden;
     }
 
-    img { display: block; max-width: 100%; height: auto; }
-
-    /* ════════════════════════════════════════
-       NAV
-    ════════════════════════════════════════ */
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 18px 48px;
+      padding: 18px var(--side-margin);
       display: flex; align-items: center; justify-content: space-between;
-      background: rgba(248,246,240,0.94);
-      backdrop-filter: blur(12px);
+      background: rgba(248,246,240,0.92);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
     .nav-brand {
       font-family: 'Lora', serif;
-      font-size: 1rem; color: var(--green);
-      text-decoration: none; letter-spacing: 0.02em;
+      font-size: 1rem;
+      color: var(--green);
+      text-decoration: none;
+      letter-spacing: 0.02em;
     }
     .nav-meta {
-      font-size: 0.78rem; color: var(--ink-light); letter-spacing: 0.06em;
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      letter-spacing: 0.06em;
     }
 
-    /* ════════════════════════════════════════
-       LAYOUT HELPERS
-    ════════════════════════════════════════ */
+    /* ── READING COLUMN ── */
     .col {
       max-width: 680px;
       margin: 0 auto;
-      padding: 0 var(--col-pad);
+      padding: 0; /* Horizontal padding is now handled by the parent .section */
+    }
+    .col-wide {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0; 
     }
 
-    /* ════════════════════════════════════════
-       HERO
-    ════════════════════════════════════════ */
+    /* ── HERO ── */
     .hero {
-      padding: 140px var(--col-pad) 80px;
+      padding: 140px var(--side-margin) 80px;
       text-align: center;
       max-width: 760px;
       margin: 0 auto;
     }
     .hero-tag {
       display: inline-block;
-      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.18em; color: var(--green-mid);
-      background: var(--green-pale); border: 1px solid var(--green-light);
-      padding: 5px 14px; border-radius: 100px; margin-bottom: 32px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--green-mid);
+      background: var(--green-pale);
+      border: 1px solid var(--green-light);
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 32px;
     }
     .hero h1 {
       font-family: 'Lora', serif;
-      font-size: clamp(2.2rem, 5.5vw, 5rem);
-      font-weight: 600; line-height: 1.1;
-      color: var(--ink); margin-bottom: 24px;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 24px;
     }
-    .hero h1 em { color: var(--green); font-style: italic; }
+    .hero h1 em {
+      color: var(--green);
+      font-style: italic;
+    }
     .hero-deck {
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      font-weight: 300; color: var(--ink-light);
-      line-height: 1.8; margin-bottom: 48px;
-      max-width: 560px; margin-left: auto; margin-right: auto;
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--ink-light);
+      line-height: 1.8;
+      margin-bottom: 48px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .hero-credits {
-      display: flex; justify-content: center;
-      gap: 32px; flex-wrap: wrap;
-      border-top: 1px solid var(--border); padding-top: 28px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
     }
     .credit { display: flex; flex-direction: column; gap: 3px; }
-    .credit-label {
-      font-size: 0.68rem; text-transform: uppercase;
-      letter-spacing: 0.14em; color: var(--ink-light);
-    }
+    .credit-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-light); }
     .credit-value { font-size: 0.9rem; font-weight: 500; color: var(--ink); }
 
-    /* ════════════════════════════════════════
-       SCREENS STRIP
-    ════════════════════════════════════════ */
+    /* ── HERO SCREENS STRIP ── */
     .screens-strip {
-      display: flex; justify-content: center;
-      gap: 16px; padding: 48px var(--col-pad) 0;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 48px var(--side-margin) 0;
       overflow: hidden;
     }
-    .phone-wrap { flex-shrink: 0; width: 160px; }
+    .phone-wrap {
+      flex-shrink: 0;
+      width: 160px;
+    }
     .phone-wrap:nth-child(2) { transform: translateY(-20px); }
     .phone-wrap img {
-      width: 100%; border-radius: 22px;
+      width: 100%;
+      height: auto;
+      border-radius: 22px;
       box-shadow: 0 24px 60px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.07);
+      display: block;
     }
 
-    /* ════════════════════════════════════════
-       SECTIONS
-    ════════════════════════════════════════ */
-    .section { padding: var(--section-pad) 0; }
+    /* ── SECTION TYPOGRAPHY ── */
+    .section { padding: 80px var(--side-margin); }
     .section + .section { border-top: 1px solid var(--border); }
 
     .section-marker {
-      font-size: 0.68rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.2em;
-      color: var(--gold); margin-bottom: 20px;
-      display: flex; align-items: center; gap: 10px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .section-marker::after {
-      content: ''; flex: 1; height: 1px; background: var(--border);
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
 
     h2 {
       font-family: 'Lora', serif;
-      font-size: clamp(1.6rem, 2.8vw, 2.5rem);
-      font-weight: 600; line-height: 1.2;
-      color: var(--ink); margin-bottom: 28px;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 28px;
     }
     h2 em { color: var(--green); font-style: italic; }
 
     h3 {
       font-family: 'Lora', serif;
-      font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-      font-weight: 600; color: var(--ink);
-      margin-bottom: 10px; margin-top: 40px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 10px;
+      margin-top: 40px;
     }
     h3:first-child { margin-top: 0; }
 
-    p { color: var(--ink-light); margin-bottom: 20px; font-weight: 300; }
+    p {
+      color: var(--ink-light);
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
     p:last-child { margin-bottom: 0; }
     p strong { color: var(--ink); font-weight: 500; }
 
-    /* ════════════════════════════════════════
-       PULL QUOTE
-    ════════════════════════════════════════ */
+    /* ── PULL QUOTE ── */
     .pull-quote {
-      margin: 40px 0; padding: 28px 36px;
+      margin: 40px 0;
+      padding: 32px 40px;
       border-left: 3px solid var(--green);
-      background: var(--green-pale); border-radius: 0 12px 12px 0;
+      background: var(--green-pale);
+      border-radius: 0 12px 12px 0;
     }
     .pull-quote p {
       font-family: 'Lora', serif;
-      font-size: clamp(1.05rem, 2vw, 1.3rem);
-      font-style: italic; line-height: 1.65;
-      color: var(--ink) !important; margin-bottom: 14px;
+      font-size: 1.3rem;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--ink) !important;
+      margin-bottom: 14px;
     }
     .pull-quote cite {
-      font-size: 0.78rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--green-mid); font-style: normal;
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green-mid);
+      font-style: normal;
     }
 
-    /* ════════════════════════════════════════
-       STAT ROW
-    ════════════════════════════════════════ */
+    /* ── STAT ROW ── */
     .stat-row {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 12px;
-      overflow: hidden; margin: 40px 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 40px 0;
     }
     .stat-cell {
-      background: var(--white); padding: 28px 20px; text-align: center;
+      background: var(--white);
+      padding: 28px 24px;
+      text-align: center;
     }
     .stat-num {
-      font-family: 'Lora', serif; font-size: 2.2rem;
-      font-weight: 600; color: var(--green);
-      line-height: 1; display: block; margin-bottom: 6px;
+      font-family: 'Lora', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--green);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
     }
     .stat-label {
-      font-size: 0.82rem; font-weight: 400;
-      color: var(--ink-light); line-height: 1.4;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--ink-light);
+      line-height: 1.4;
     }
 
-    /* ════════════════════════════════════════
-       INLINE SCREEN
-    ════════════════════════════════════════ */
-    .inline-screen { margin: 48px auto; max-width: 280px; }
+    /* ── INLINE SCREEN ── */
+    .inline-screen {
+      margin: 48px auto;
+      max-width: 280px;
+    }
     .inline-screen img {
+      width: 100%;
+      height: auto;
       border-radius: 28px;
       box-shadow: 0 28px 70px rgba(0,0,0,0.13), 0 6px 20px rgba(0,0,0,0.07);
+      display: block;
     }
     .inline-screen figcaption {
-      text-align: center; font-size: 0.78rem;
-      color: var(--ink-light); margin-top: 14px; font-style: italic;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      margin-top: 14px;
+      font-style: italic;
     }
 
-    /* ════════════════════════════════════════
-       THREE-SCREEN ROW
-    ════════════════════════════════════════ */
-    .screens-trio {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 20px; margin: 48px auto; max-width: 720px;
-      padding: 0 var(--col-pad);
+    /* ── SIDE-BY-SIDE SCREENS ── */
+    .screens-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 48px auto;
+      max-width: 560px;
     }
-    .screens-trio figure img {
+    .screens-pair figure img {
+      width: 100%;
+      height: auto;
       border-radius: 22px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.11), 0 4px 14px rgba(0,0,0,0.06);
+      display: block;
     }
-    .screens-trio figcaption {
-      text-align: center; font-size: 0.75rem;
-      color: var(--ink-light); margin-top: 10px; font-style: italic;
+    .screens-pair figcaption {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--ink-light);
+      margin-top: 10px;
+      font-style: italic;
     }
 
-    /* ════════════════════════════════════════
-       CHALLENGE BLOCK
-    ════════════════════════════════════════ */
+    /* ── CHALLENGE BLOCK ── */
     .challenge {
-      margin: 48px 0; padding: 32px 32px 28px;
+      margin: 48px 0;
+      padding: 32px 36px;
       border-radius: 16px;
-      background: var(--white); border: 1px solid var(--border);
+      background: var(--white);
+      border: 1px solid var(--border);
       position: relative;
     }
     .challenge-num {
-      position: absolute; top: -16px; left: 24px;
-      font-family: 'Lora', serif; font-size: 0.72rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.14em;
-      background: var(--green); color: var(--white);
-      padding: 4px 14px; border-radius: 100px;
+      position: absolute;
+      top: -16px; left: 28px;
+      font-family: 'Lora', serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: var(--green);
+      color: var(--white);
+      padding: 4px 14px;
+      border-radius: 100px;
     }
-    .challenge h3 {
-      font-size: 1.05rem; margin-top: 8px; margin-bottom: 12px;
-    }
+    .challenge h3 { font-size: 1.1rem; margin-top: 8px; margin-bottom: 10px; }
+    .challenge p { font-size: 0.93rem; margin-bottom: 0; }
     .challenge .problem-line {
-      background: var(--red-soft); border-radius: 8px;
-      padding: 10px 14px; font-size: 0.88rem;
-      color: var(--red-text); margin-bottom: 12px;
-      display: flex; gap: 8px; align-items: flex-start;
-      line-height: 1.55;
+      background: var(--red-soft);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: var(--red-text);
+      margin-bottom: 12px;
+      display: flex; gap: 8px;
     }
     .challenge .solution-line {
-      background: var(--green-pale); border-radius: 8px;
-      padding: 10px 14px; font-size: 0.88rem;
-      color: var(--green); display: flex; gap: 8px;
-      align-items: flex-start; line-height: 1.55;
+      background: var(--green-pale);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: var(--green);
+      display: flex; gap: 8px;
+    }
+    .challenge .problem-line span:first-child,
+    .challenge .solution-line span:first-child {
+      flex-shrink: 0;
     }
 
-    /* ════════════════════════════════════════
-       IMPACT BOX
-    ════════════════════════════════════════ */
+    /* ── IMPACT BOX ── */
     .impact-box {
-      background: var(--green); border-radius: 20px;
-      padding: 48px 52px; margin: 48px 0; color: var(--white);
+      background: var(--green);
+      border-radius: 20px;
+      padding: 48px 52px;
+      margin: 48px 0;
+      color: var(--white);
     }
     .impact-box h3 {
-      font-family: 'Lora', serif; font-size: 1.3rem;
-      color: var(--white); margin-bottom: 20px; margin-top: 0;
+      font-family: 'Lora', serif;
+      font-size: 1.4rem;
+      color: var(--white);
+      margin-bottom: 20px;
+      margin-top: 0;
     }
-    .impact-list {
-      list-style: none; display: flex; flex-direction: column; gap: 16px;
-    }
+    .impact-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
     .impact-list li {
       display: flex; align-items: flex-start; gap: 12px;
-      font-size: 0.93rem; color: rgba(255,255,255,0.82);
-      font-weight: 300; line-height: 1.6;
+      font-size: 0.93rem;
+      color: rgba(255,255,255,0.82);
+      font-weight: 300;
     }
-    .impact-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: #9ECDB0; margin-top: 9px; flex-shrink: 0;
-    }
+    .impact-dot { width: 5px; height: 5px; border-radius: 50%; background: #9ECDB0; margin-top: 9px; flex-shrink: 0; }
 
-    /* ════════════════════════════════════════
-       FOOTER
-    ════════════════════════════════════════ */
+    /* ── FOOTER ── */
     footer {
-      padding: 40px var(--col-pad); text-align: center;
+      padding: 40px var(--side-margin);
+      text-align: center;
       border-top: 1px solid var(--border);
-      font-size: 0.82rem; color: var(--ink-light);
+      font-size: 0.82rem;
+      color: var(--ink-light);
     }
 
-    /* ════════════════════════════════════════
-       FADE IN
-    ════════════════════════════════════════ */
-    .fade {
-      opacity: 0; transform: translateY(22px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
+    /* ── FADE IN ── */
+    .fade { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade.in { opacity: 1; transform: none; }
 
-    /* ════════════════════════════════════════
-       TABLET  641px – 1024px
-    ════════════════════════════════════════ */
-    @media (min-width: 641px) and (max-width: 1024px) {
-      nav { padding: 16px 32px; }
-
-      .hero {
-        padding: 120px 32px 64px;
-      }
-      .hero-credits { gap: 24px; }
-
-      /* Show all 3 phones but smaller */
-      .phone-wrap { width: 130px; }
-
-      /* Stat row stays 3-col but tighter */
-      .stat-cell { padding: 22px 14px; }
-      .stat-num { font-size: 1.9rem; }
-
-      /* Trio stays 3-col on tablet */
-      .screens-trio {
-        max-width: 620px;
-        gap: 14px;
-      }
-
-      /* Challenge slightly tighter */
-      .challenge { padding: 28px 28px 24px; }
-
-      /* Impact box */
-      .impact-box { padding: 40px 40px; }
-
-      .section { padding: 64px 0; }
-    }
-
-    /* ════════════════════════════════════════
-       MOBILE  ≤ 640px
-    ════════════════════════════════════════ */
-    @media (max-width: 640px) {
-      :root {
-        --section-pad: 52px;
-        --col-pad: 20px;
-      }
-
-      /* ── NAV ── */
-      nav { padding: 14px 20px; }
-      .nav-meta { display: none; }     /* hide subtitle, keep brand */
-
-      /* ── HERO ── */
-      .hero {
-        padding: 100px 20px 52px;
-        text-align: left;
-      }
-      .hero h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
-      .hero-deck {
-        font-size: 1rem;
-        margin-bottom: 36px;
-        margin-left: 0; margin-right: 0;
-      }
-      .hero-credits {
-        justify-content: flex-start;
-        gap: 20px;
-      }
-      .credit-label { font-size: 0.62rem; }
-      .credit-value { font-size: 0.84rem; }
-
-      /* ── SCREENS STRIP ── */
-      /* Show only the centre phone on mobile */
-      .screens-strip {
-        padding: 36px 20px 0;
-      }
-      .phone-wrap { width: 200px; }
-      .phone-wrap:nth-child(1),
-      .phone-wrap:nth-child(3) { display: none; }
-      .phone-wrap:nth-child(2) { transform: none; }
-
-      /* ── HEADINGS ── */
-      h2 { font-size: clamp(1.5rem, 6vw, 2rem); margin-bottom: 20px; }
-      h3 { font-size: 1.05rem; margin-top: 32px; }
-
-      /* ── PULL QUOTE ── */
-      .pull-quote { padding: 20px 20px 20px 24px; margin: 28px 0; }
-      .pull-quote p { font-size: 1.05rem; }
-
-      /* ── STAT ROW ── */
-      /* Stack vertically on mobile */
+    /* ── RESPONSIVE STYLES ── */
+    @media (max-width: 768px) {
       .stat-row { grid-template-columns: 1fr; }
-      .stat-cell { padding: 20px 16px; }
-      .stat-num { font-size: 2rem; }
-
-      /* ── INLINE SCREEN ── */
-      .inline-screen { max-width: 240px; margin: 36px auto; }
-
-      /* ── SCREENS TRIO ── */
-      /* Show a single scrollable row on mobile */
-      .screens-trio {
-        display: flex;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        gap: 14px;
-        max-width: 100%;
-        padding: 0 20px 12px;
-        margin: 36px 0;
-      }
-      .screens-trio figure {
-        flex: 0 0 64vw;
-        max-width: 220px;
-        scroll-snap-align: center;
-      }
-      /* Hide scrollbar but keep scroll */
-      .screens-trio::-webkit-scrollbar { display: none; }
-      .screens-trio { -ms-overflow-style: none; scrollbar-width: none; }
-
-      /* scroll hint caption */
-      .trio-hint {
-        display: block;
-        text-align: center;
-        font-size: 0.72rem;
-        color: var(--ink-light);
-        margin-top: -4px;
-        margin-bottom: 36px;
-        font-style: italic;
-      }
-
-      /* ── CHALLENGE BLOCK ── */
-      .challenge { padding: 28px 20px 22px; margin: 36px 0; }
-      .challenge-num { left: 16px; font-size: 0.65rem; padding: 3px 12px; }
-      .challenge h3 { font-size: 1rem; }
-      .challenge .problem-line,
-      .challenge .solution-line { font-size: 0.84rem; padding: 9px 12px; }
-
-      /* ── IMPACT BOX ── */
-      .impact-box { padding: 28px 24px; border-radius: 16px; margin: 32px 0; }
-      .impact-box h3 { font-size: 1.1rem; }
-      .impact-list li { font-size: 0.88rem; }
-
-      /* ── SECTION MARKER ── */
-      .section-marker { font-size: 0.62rem; }
-
-      /* ── FOOTER ── */
-      footer { padding: 32px 20px; font-size: 0.78rem; }
+      .screens-pair { grid-template-columns: 1fr; max-width: 320px; }
+      .impact-box { padding: 40px 32px; }
+      .pull-quote { padding: 24px 28px; }
+      .challenge { padding: 28px 24px; }
     }
 
-    /* ════════════════════════════════════════
-       EXTRA SMALL  ≤ 380px  (small Android)
-    ════════════════════════════════════════ */
-    @media (max-width: 380px) {
-      .hero h1 { font-size: 1.85rem; }
-      .phone-wrap { width: 180px; }
-      .impact-box { padding: 22px 18px; }
-      .challenge { padding: 24px 16px 18px; }
-      .screens-trio figure { flex: 0 0 75vw; }
+    @media (max-width: 640px) {
+      nav { padding: 16px var(--side-margin); }
+      .hero { padding-top: 100px; padding-bottom: 60px; }
+      .hero h1 { font-size: 2.2rem; }
+      .screens-strip .phone-wrap:nth-child(1),
+      .screens-strip .phone-wrap:nth-child(3) { display: none; }
+      .impact-box { padding: 32px 24px; }
+      .pull-quote { padding: 20px 20px; margin: 32px 0; }
+      .challenge { padding: 24px 20px; margin: 40px 0; }
+      .challenge-num { left: 16px; top: -14px; }
+      .hero-credits { gap: 20px; }
+    }
+
+    @media (max-width: 480px) {
+      nav { flex-direction: column; gap: 8px; align-items: center; }
+      .hero h1 { font-size: 2rem; }
+      h2 { font-size: 1.6rem; }
+      .hero-deck { font-size: 1rem; }
+      .stat-num { font-size: 1.8rem; }
+      .nav-meta { font-size: 0.7rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
 <nav>
   <a href="#" class="nav-brand">Go Farming</a>
   <span class="nav-meta">UI/UX Case Study · 2026</span>
@@ -476,8 +427,8 @@
 <!-- ── HERO ── -->
 <div class="hero fade">
   <span class="hero-tag">Self-Initiated · Figma · 3 Weeks</span>
-  <h1>Where quality food<br>finds its <em>nearest neighbour</em></h1>
-  <p class="hero-deck">A hyper-local platform connecting people who grow, brew, and raise food at home with buyers who value quality, provenance, and trust — because these trades were already happening. They just needed a home.</p>
+  <h1>Turning surplus harvests<br>into <em>neighbourhood commerce</em></h1>
+  <p class="hero-deck">A hyper-local platform that connects home growers with nearby buyers — because fresh food was already being shared informally. It just needed a home.</p>
   <div class="hero-credits">
     <div class="credit"><span class="credit-label">Role</span><span class="credit-value">UI/UX Designer</span></div>
     <div class="credit"><span class="credit-label">Tools</span><span class="credit-value">Figma</span></div>
@@ -486,26 +437,26 @@
   </div>
 </div>
 
-<!-- ── ONBOARDING STRIP ── -->
+<!-- Onboarding screens strip -->
 <div class="screens-strip fade">
   <div class="phone-wrap">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/walkthrough.png" alt="Love Fresh Food at Home" />
+    <img  src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/324a1e9b2adbd8d47d322335a5b6dac6a22cba98/walkthrough-1.png" />
   </div>
   <div class="phone-wrap">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/walkthrough-1.png" alt="Got Extra Vegetables" />
+    <img src="walkthrough-1.png" alt="Got Extra Vegetables screen" />
   </div>
   <div class="phone-wrap">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/walkthrough-2.png" alt="Share with Your Neighbour" />
+    <img src="walkthrough-2.png" alt="Share with Your Neighbour screen" />
   </div>
 </div>
 
-<!-- ── 01 WHY THIS MATTERS ── -->
+<!-- ── SECTION 1: WHY THIS MATTERS ── -->
 <div class="section">
   <div class="col fade">
     <div class="section-marker">01 &nbsp; Why This Matters</div>
-    <h2>The best food in your city is sitting in someone's backyard — and you have no way to find it.</h2>
-    <p>India generates over <strong>70 million tonnes of food waste annually</strong>, and a significant share of that happens at home. But the real story isn't just about waste. It's about what gets lost before it even reaches a stranger's table — <strong>cold-pressed oils, home-brewed wine, backyard honey, freshly caught river fish, small-batch jams</strong> — things you simply cannot buy at a supermarket.</p>
-    <p>At the same time, urban India's appetite for provenance-driven, chemical-free produce is growing fast. People aren't just looking for fresh food. They're looking for food with a story — <strong>grown by someone 2km away, on a balcony they can walk past</strong>.</p>
+    <h2>Every day, fresh food is thrown away while neighbours go without it.</h2>
+    <p>India generates over <strong>70 million tonnes of food waste annually</strong>. A significant portion of that waste happens at home — not in factories or restaurants. Balcony gardeners, kitchen farmers, and hobby growers regularly produce more than they can eat, but they have no simple way to share it with the people five minutes away.</p>
+    <p>At the same time, urban India is developing a growing appetite for fresh, chemical-free produce in small quantities. People don't want to buy 5 kgs of tomatoes from a supermarket. They want <strong>200 grams of something they can trust, from someone nearby</strong>.</p>
     <p>The exchange already happens — on WhatsApp, through word of mouth, over compound walls. Go Farming isn't inventing a behaviour. It's giving an existing behaviour a structure, a trust layer, and a home.</p>
 
     <div class="stat-row">
@@ -525,7 +476,7 @@
   </div>
 </div>
 
-<!-- ── 02 THE PROBLEM ── -->
+<!-- ── SECTION 2: THE PROBLEM ── -->
 <div class="section">
   <div class="col fade">
     <div class="section-marker">02 &nbsp; The Problem</div>
@@ -533,56 +484,59 @@
     <p>I started by talking to people — 5 home growers and 3 buyers in Guwahati and Bengaluru. The same story came up again and again.</p>
 
     <div class="pull-quote">
-      <p>"I had an entire batch of homemade wine last season, and I ended up giving most of it away randomly. I had no way to let the right people know it existed."</p>
-      <cite>— Interview participant, home brewer &amp; grower, Guwahati</cite>
+      <p>"I had 2 kg of tomatoes last month, and half of it spoiled. I wished there was a way to share or sell it to my neighbours."</p>
+      <cite>— Interview participant, home grower, Guwahati</cite>
     </div>
 
-    <p>Growers with surplus avocados, Rohu fish they'd raised themselves, or bottles of fermented produce were either sharing randomly or letting quality go to waste. Buyers were paying premium prices for inferior, mass-market versions of the same things at supermarkets. And the platforms that <em>could</em> connect them — OLX, WhatsApp, even specialty grocery apps — weren't built for this. Wrong scale. No location filter for food. No way to post a listing that says <strong>"I have 8 bottles of cold-pressed sesame oil, made last week, 1.5km from you."</strong></p>
+    <p>Growers were giving produce away informally or letting it rot. Buyers were paying more for worse produce at bulk markets. And the platforms that <em>could</em> connect them — OLX, WhatsApp, even grocery delivery apps — weren't built for this. Bulk focus. No location filter for produce. No way to post a listing that says "I have 300g of fresh coriander, ready now, 1.5km from you."</p>
     <p>The gap wasn't awareness. It wasn't motivation. It was <strong>friction, trust, and structure</strong> — and those are design problems.</p>
   </div>
 </div>
 
-<!-- ── 03 HOW I FIXED IT ── -->
+<!-- ── SECTION 3: HOW I FIXED IT ── -->
 <div class="section">
   <div class="col fade">
     <div class="section-marker">03 &nbsp; How I Fixed It</div>
     <h2>Design decisions that directly addressed what users needed.</h2>
-    <p>Research gave me a clear picture of what mattered most: proximity, trust, and the ability to negotiate. The design had to serve both a <strong>grower posting her first batch of homemade wine</strong> and a <strong>buyer hunting for freshly pressed avocado oil on his lunch break</strong>.</p>
+    <p>Research gave me a clear picture of what mattered most: proximity, trust, and the ability to negotiate. The design had to serve both a <strong>40-year-old housewife posting her balcony harvest</strong> and a <strong>30-year-old professional browsing on his commute</strong>.</p>
   </div>
 
+  <!-- Home screen inline -->
   <figure class="inline-screen fade">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/home.png" alt="Go Farming home screen" />
-    <figcaption>Home — location-anchored, category-first, distance on every card.</figcaption>
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/169f3e29620123b5b59eea793a1c6bc93d6f287e/home.jpg"/>
+    <figcaption>Home screen — location-anchored, category-first, with distance visible on every card.</figcaption>
   </figure>
 
   <div class="col fade">
     <h3>Location as the foundation, not a setting</h3>
-    <p>Proximity isn't a filter. It's the entire value proposition. When someone lists artisanal honey or farm-raised Rohu, the buyer's first question is always "how far?" — not "how cheap?" The home screen leads with your current neighbourhood; every card shows the exact distance. The location picker goes State → City → Neighbourhood, so it works whether you're in Beltola, Guwahati or Koramangala, Bengaluru.</p>
+    <p>Proximity isn't a filter. It's the entire value proposition. The home screen leads with your current neighbourhood — every listing card shows the exact distance. The location picker goes State → City → Neighbourhood so it works for both urban and smaller-town users. If you're in Beltola, Guwahati, you see Beltola first.</p>
 
-    <h3>Discovery that reflects how people actually grow</h3>
-    <p>Categories like Homemade Products, Fish, Dairy, Brewery, Flowers, and Mushrooms reflect the real range of what people produce at home — not a supermarket planogram. A buyer browsing for homemade wine should land in Brewery, not scroll past 40 listings of commodities. The "Buy Again" section creates repeat purchase loyalty. "Explore" rewards discovery. <strong>Both sides benefit from being shown, not just searched for.</strong></p>
+    <h3>Discovery that reflects how people actually browse</h3>
+    <p>Categories like Staples, Fruits, Fish, Dairy, Homemade Products, and Flowers reflect the real variety of what home growers produce — not a supermarket aisle. The "Buy Again" section creates repeat purchase behaviour. "Explore" surfaces discovery. <strong>Both buyers and sellers benefit from being shown, not just searched for.</strong></p>
 
     <h3>A trust system that's visible, not buried</h3>
-    <p>Nobody pays ₹500/bottle for homemade wine from a stranger without some proof of credibility. Go Farming builds trust in layers: Government ID verification unlocks a visible "Verified" badge on every listing and profile. Star ratings are collected post-transaction. Seller profiles surface past listings, follower count, and a location map. Trust isn't a modal — it's woven into every touchpoint.</p>
+    <p>First-time buyers won't purchase from a stranger without some proof of credibility. Go Farming builds this in layers: a Government ID verification unlocks a visible "Verified" badge that appears on every listing and profile. Star ratings are collected post-transaction. Seller profiles show past listings, follower count, and location context. Trust isn't a modal — it's woven into every touchpoint.</p>
   </div>
 
+  <!-- Profile screen inline -->
   <figure class="inline-screen fade">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/chat.png" alt="Verified seller profile" />
-    <figcaption>Seller profile — verified badge, rating, past listings, location map.</figcaption>
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/0e9f2f310e47b8ceaa8cb4acc37f677defa80794/Profile.jpg" />
+    <figcaption>Seller profile — verified badge, star rating, past listings, and embedded location map.</figcaption>
   </figure>
 
   <div class="col fade">
-    <h3>A notification system that closes the loop</h3>
-    <p>Every trade generates activity — offer requests, counter-offers, acceptances, rejections. When someone is negotiating on a rare batch of backyard avocados or farm-raised meat, they can't afford to miss a message. The notification centre groups every event by date and makes it searchable, so neither side is left wondering what happened. It turns browsing into active, accountable commerce.</p>
+    <h3>Notification system that closes the loop</h3>
+    <p>Every trade generates activity — offer requests, counter-offers, acceptances, rejections. Grouping notifications by date and making them searchable means neither side is left wondering what happened. The notification centre turns casual browsing into active commerce.</p>
   </div>
 
+  <!-- Notifications inline -->
   <figure class="inline-screen fade">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/chat-1.png" alt="Notifications screen" />
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/request.jpg" />
     <figcaption>Notifications — every trade event surfaced clearly, grouped by date.</figcaption>
   </figure>
 </div>
 
-<!-- ── 04 CHALLENGES ── -->
+<!-- ── SECTION 4: CHALLENGES ── -->
 <div class="section">
   <div class="col fade">
     <div class="section-marker">04 &nbsp; Challenges I Faced</div>
@@ -594,81 +548,80 @@
     <div class="challenge">
       <span class="challenge-num">Challenge 01</span>
       <h3>How do you enable price negotiation without building a checkout system?</h3>
-      <div class="problem-line"><span>⚠</span><span>A standard "Add to Cart → Buy Now" model didn't fit. When someone is buying a bottle of homemade wine or a kilogram of forest-foraged mushrooms, the exchange is personal and conversational — the price, quantity, and handoff all get worked out together. A checkout flow would kill that.</span></div>
-      <div class="solution-line"><span>✓</span><span>Negotiation moved into the chat itself. Pre-filled offer chips (₹600, ₹450, ₹400, ₹350, ₹300/kg) give structure to the conversation without forcing a transactional UI. Buyers can tap or type freely. The result feels like texting a neighbour — not completing a purchase.</span></div>
+      <div class="problem-line"><span>⚠</span> A standard "Add to Cart → Buy Now" model didn't fit. These trades are conversational and informal — nobody buys 500g of spinach through a checkout flow.</div>
+      <div class="solution-line"><span>✓</span> I moved negotiation into the chat itself. Pre-filled offer chips (₹600, ₹450, ₹400, ₹350, ₹300/kg) give structure to the conversation without forcing a transactional UI. Buyers can tap or type. The result feels like texting — not buying.</div>
     </div>
 
     <div class="challenge">
       <span class="challenge-num">Challenge 02</span>
-      <h3>How do you make the listing flow simple enough for a first-time seller?</h3>
-      <div class="problem-line"><span>⚠</span><span>Sumita (42, housewife, Guwahati) grows produce and makes preserves at home. She's a WhatsApp user. If posting a listing felt like filling a government form, she'd close the app before submitting. But a listing for homemade avocado pickle or cold-pressed oil needs to communicate freshness, quantity, availability, and pickup options.</span></div>
-      <div class="solution-line"><span>✓</span><span>The listing flow is split into two focused tabs — Info (what it is, price, when it's ready) and Upload (photos with tips on how to shoot food well). Required fields are starred. The Available From/Till window lets sellers signal freshness — "ready in 3 days, best before Sept" — without needing to update listings daily.</span></div>
+      <h3>How do you make the listing flow simple enough for non-technical sellers?</h3>
+      <div class="problem-line"><span>⚠</span> Sumita (42, housewife) is a WhatsApp user. If posting a listing felt like filling a government form, she'd abandon it. But sellers also needed to communicate price, quantity, availability, and pickup options.</div>
+      <div class="solution-line"><span>✓</span> I split the flow into two tabs — Info (details) and Upload (photos) — so it never felt overwhelming at once. Required fields are starred. Available From/Till lets sellers communicate freshness windows without needing to update listings daily.</div>
     </div>
   </div>
 
-  <!-- Trio: scrollable on mobile, 3-col on tablet/desktop -->
-  <div class="screens-trio fade">
+  <!-- Add item screens pair -->
+  <div class="screens-pair fade">
     <figure>
-      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/chat-2.png" alt="Add new item — Info tab" />
-      <figcaption>Info tab — title, price, dates.</figcaption>
+      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/myAd.jpg" />
+      <figcaption>Info tab — title, price, availability window.</figcaption>
     </figure>
     <figure>
-      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/chat-3.png" alt="Add new item — Upload empty" />
-      <figcaption>Upload — before photos added.</figcaption>
+      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/addItem-info.jpg" />
+      <figcaption>Upload tab — photo tips, cover image selection.</figcaption>
     </figure>
     <figure>
-      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/main/chat-4.png" alt="Add new item — Upload with photos" />
-      <figcaption>Upload — cover image selected.</figcaption>
+      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/addItem-upload.jpg" />
+      <figcaption>Upload tab — photo tips, cover image selection.</figcaption>
     </figure>
   </div>
-  <span class="trio-hint">← Swipe to see all screens →</span>
 
   <div class="col fade">
     <div class="challenge">
       <span class="challenge-num">Challenge 03</span>
-      <h3>How do you serve the gift economy and commercial exchange on the same platform?</h3>
-      <div class="problem-line"><span>⚠</span><span>Several people in research had no interest in selling. They just wanted to give away surplus — a jar of homemade jam, a bunch of herbs, the last few avocados from their tree — without any transaction. Building a separate app wasn't realistic, but mixing free and paid listings without distinction would confuse buyers looking to pay for quality.</span></div>
-      <div class="solution-line"><span>✓</span><span>A single toggle filter — "Free to share" — cleanly separates gift-economy listings from price-based ones. One small UI element holds the entire tension between community generosity and local commerce. Neither feels like a second-class citizen on the platform.</span></div>
+      <h3>How do you serve the gift economy and the commercial exchange on the same platform?</h3>
+      <div class="problem-line"><span>⚠</span> Several growers in research had no interest in selling — they just wanted to give away surplus without the friction of a transaction. But building a separate app for "free sharing" wasn't realistic, and mixing it without distinction would confuse commercial buyers.</div>
+      <div class="solution-line"><span>✓</span> A single toggle filter — "Free to share" — separates gift-economy listings from price-based ones. One small UI element holds the entire tension between community generosity and local commerce, without making either feel like a second-class citizen.</div>
     </div>
   </div>
 </div>
 
-<!-- ── 05 IMPACT ── -->
+<!-- ── SECTION 5: IMPACT ── -->
 <div class="section">
   <div class="col fade">
     <div class="section-marker">05 &nbsp; Contribution to Society</div>
     <h2>What this product could do at scale.</h2>
-    <p>Go Farming is a small app solving a very local problem. But the model — hyper-local, trust-layered, conversation-based community commerce — has implications that stretch beyond one city or one harvest.</p>
+    <p>Go Farming is a small app solving a very local problem. But the model — hyper-local, trust-layered, conversation-based community commerce — has implications that stretch beyond one city or one vegetable.</p>
 
     <div class="impact-box">
       <h3>If 1 in 10 home growers in a single city used this once a week:</h3>
       <ul class="impact-list">
-        <li><div class="impact-dot"></div><div><strong>Quality food stops going to waste</strong> — A batch of homemade wine, a kilogram of foraged mushrooms, a tray of avocados — each one reaches someone who genuinely values it, before it's lost. Every listing is a unit of effort and care that doesn't disappear.</div></li>
-        <li><div class="impact-dot"></div><div><strong>Premium, chemical-free access becomes local</strong> — Urban buyers get cold-pressed oils, farm-raised fish, and small-batch preserves without supermarket mark-ups or cold-chain loss. What was once a farmers' market privilege becomes a neighbourhood habit.</div></li>
-        <li><div class="impact-dot"></div><div><strong>Micro income with real dignity</strong> — A grower earning ₹500–₹2000/week from homemade wine or specialty produce isn't a business. But it's real income, with no commute, no middleman, and no platform taking a cut.</div></li>
-        <li><div class="impact-dot"></div><div><strong>Neighbourhood trust, built trade by trade</strong> — Every completed transaction is a human connection. A verified profile. A star given. A follow made. The app builds social capital as a by-product of commerce.</div></li>
-        <li><div class="impact-dot"></div><div><strong>A model that travels</strong> — What works for homemade wine in Guwahati works for cold-pressed oils in Bengaluru, foraged mushrooms in Pune, or farm-raised poultry in Mumbai. The infrastructure is the same; the community fills it with whatever it grows best.</div></li>
+        <li><div class="impact-dot"></div><strong>Less food waste</strong> — Surplus produce reaches someone who wants it, before it rots. Every listing is a unit of food saved.</li>
+        <li><div class="impact-dot"></div><strong>Chemical-free access</strong> — Urban buyers get fresh, home-grown produce without pesticides or cold-chain loss. Organic eating becomes accessible, not expensive.</li>
+        <li><div class="impact-dot"></div><strong>Micro income for households</strong> — A grower earning ₹200–₹500/week from their balcony isn't a business. But it's real income, with no commute, no middleman, and no platform taking a cut.</li>
+        <li><div class="impact-dot"></div><strong>Neighbourhood trust</strong> — Every completed trade is a human connection. A verified profile. A rating given. A follow made. The app builds social capital alongside economic value.</li>
+        <li><div class="impact-dot"></div><strong>A model that scales</strong> — What works for tomatoes in Guwahati works for mushrooms in Pune, herbs in Bengaluru, or homemade jams in Mumbai. The infrastructure is the same; the community fills it.</li>
       </ul>
     </div>
   </div>
 </div>
 
-<!-- ── 06 REFLECTION ── -->
+<!-- ── SECTION 6: REFLECTION ── -->
 <div class="section">
   <div class="col fade">
     <div class="section-marker">06 &nbsp; Reflection</div>
     <h2>What I learned, and what I'd do differently.</h2>
 
     <h3>What worked</h3>
-    <p>Starting from an existing informal behaviour — WhatsApp food swaps between neighbours — meant the product had a real user base before a single screen was designed. The research didn't generate the insight; it confirmed something that was already happening and helped me design with it, not against it.</p>
-    <p>Putting negotiation inside chat rather than building a checkout was the right call. It made the product feel like a community tool — not a marketplace. That distinction matters enormously when trust is the first barrier to adoption. Someone willing to buy a stranger's homemade Rohu pickle needs to feel like they're messaging a person, not processing a transaction.</p>
+    <p>Starting from an existing informal behaviour — WhatsApp vegetable swaps — meant the product had a real user base before a single screen was designed. The research didn't create the insight; it confirmed something that was already happening and helped me design with it, not against it.</p>
+    <p>The decision to put negotiation inside chat rather than building a checkout flow was the right one. It made the product feel like a community tool, not a marketplace. That distinction matters enormously for first-time user trust.</p>
 
     <h3>What I'd do differently</h3>
-    <p>I assumed offer chip denominations (₹600, ₹450, ₹400...) based on interview data from Guwahati. But price expectations differ sharply by product type and city — negotiating for a bottle of cold-pressed avocado oil in Bengaluru is a very different conversation from haggling over fresh catch in Guwahati. I'd run usability testing on the offer flow across product categories before shipping.</p>
-    <p>I'd also test the listing flow with non-tech-savvy users far earlier. Watching someone like Sumita navigate the Info → Upload tab split live would surface friction I can't anticipate from research notes alone.</p>
+    <p>I assumed the offer chip denominations (₹600, ₹450, ₹400...) based on interview data from Guwahati. But price ranges vary significantly by city and product type — persimmons in Bengaluru and tomatoes in Guwahati are completely different conversations. I'd run specific usability testing on the offer flow in multiple cities before shipping.</p>
+    <p>I'd also test the listing flow with non-tech-savvy users earlier. Watching a first-time user navigate the Info → Upload tab split would tell me far more than I can guess from research alone.</p>
 
     <h3>What's next</h3>
-    <p>Three features that would make this product genuinely indispensable: a <strong>Growth Tracker</strong> (a plant diary that predicts harvest windows and auto-drafts listings before produce is even ready), <strong>Community Recipes</strong> (connect surplus produce to what to cook — a buyer who sees "homemade wine + avocados nearby" should see what to make with both), and <strong>Delivery Coordination</strong> (a lightweight map-based pickup scheduler that removes the last friction from every trade).</p>
+    <p>Three features I believe would make this product genuinely indispensable: a <strong>Growth Tracker</strong> (a plant diary that predicts harvest windows and auto-drafts listings), <strong>Community Recipes</strong> (connect surplus produce to what to cook with it), and <strong>Delivery Coordination</strong> (a lightweight map-based pickup scheduler to remove the final friction from every trade).</p>
   </div>
 </div>
 
@@ -684,17 +637,8 @@
         io.unobserve(e.target);
       }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.1 });
   document.querySelectorAll('.fade').forEach(el => io.observe(el));
-
-  /* On mobile, hide the swipe hint after the trio is scrolled */
-  const trio = document.querySelector('.screens-trio');
-  const hint = document.querySelector('.trio-hint');
-  if (trio && hint) {
-    trio.addEventListener('scroll', () => {
-      if (trio.scrollLeft > 20) hint.style.opacity = '0';
-    }, { passive: true });
-  }
 </script>
 
 </body>
