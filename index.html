@@ -121,8 +121,8 @@
     }
     .hero-credits {
       display: flex;
-      justify-content: space-between;
-      gap: 20px;
+      justify-content: center;
+      gap: 40px;
       flex-wrap: wrap;
       border-top: 1px solid var(--border);
       padding-top: 28px;
@@ -380,6 +380,10 @@
       color: rgba(255,255,255,0.82);
       font-weight: 300;
     }
+    .impact-list li strong {
+      width: 219px;
+      flex-shrink: 0;
+    }
     .impact-dot { width: 5px; height: 5px; border-radius: 50%; background: #9ECDB0; margin-top: 9px; flex-shrink: 0; }
 
     /* ── FOOTER ── */
@@ -400,6 +404,7 @@
       .stat-row { grid-template-columns: 1fr; }
       .screens-pair { grid-template-columns: 1fr; max-width: 320px; }
       .impact-box { padding: 40px 32px; }
+      .impact-list li strong { width: auto; }
       .pull-quote { padding: 24px 28px; }
       .challenge { padding: 28px 24px; }
     }
