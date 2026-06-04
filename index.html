@@ -67,7 +67,7 @@
 
     /* ── READING COLUMN ── */
     .col {
-      max-width: 680px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 0; /* Horizontal padding is now handled by the parent .section */
     }
@@ -79,9 +79,9 @@
 
     /* ── HERO ── */
     .hero {
-      padding: 150px var(--side-margin) 60px;
+      padding: 140px var(--side-margin) 80px;
       text-align: center;
-      max-width: 1440px;
+      max-width: 1000px;
       margin: 0 auto;
     }
     .hero-tag {
@@ -95,27 +95,27 @@
       border: 1px solid var(--green-light);
       padding: 6px 16px;
       border-radius: 100px;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
     .hero h1 {
       font-family: 'Lora', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: 80px;
       font-weight: 600;
-      line-height: 1.15;
+      line-height: 88px;
       color: var(--ink);
-      margin-bottom: 16px;
+      margin-bottom: 24px;
     }
     .hero h1 em {
       color: var(--green);
       font-style: italic;
     }
     .hero-deck {
-      font-size: 1.05rem;
-      font-weight: 400;
+      font-size: 28px;
+      font-weight: 500;
       color: var(--ink-light);
-      line-height: 1.6;
-      margin-bottom: 40px;
-      max-width: 680px;
+      line-height: 36px;
+      margin-bottom: 48px;
+      max-width: 800px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -183,9 +183,9 @@
 
     h2 {
       font-family: 'Lora', serif;
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 600;
-      line-height: 1.2;
+      font-size: 45px;
+      font-weight: 500;
+      line-height: 52px;
       color: var(--ink);
       margin-bottom: 28px;
     }
@@ -204,10 +204,12 @@
     p {
       color: var(--ink-light);
       margin-bottom: 20px;
-      font-weight: 300;
+      font-size: 28px;
+      line-height: 36px;
+      font-weight: 500;
     }
     p:last-child { margin-bottom: 0; }
-    p strong { color: var(--ink); font-weight: 500; }
+    p strong { color: var(--ink); font-weight: 700; }
 
     /* ── PULL QUOTE ── */
     .pull-quote {
@@ -404,7 +406,9 @@
     @media (max-width: 640px) {
       nav { padding: 16px var(--side-margin); }
       .hero { padding-top: 100px; padding-bottom: 60px; }
-      .hero h1 { font-size: 2.2rem; }
+      .hero h1 { font-size: 44px; line-height: 52px; }
+      h2 { font-size: 32px; line-height: 40px; }
+      p, .hero-deck { font-size: 18px; line-height: 28px; }
       .screens-strip .phone-wrap:nth-child(1),
       .screens-strip .phone-wrap:nth-child(3) { display: none; }
       .impact-box { padding: 32px 24px; }
@@ -416,9 +420,9 @@
 
     @media (max-width: 480px) {
       nav { flex-direction: column; gap: 8px; align-items: center; }
-      .hero h1 { font-size: 2rem; }
-      h2 { font-size: 1.6rem; }
-      .hero-deck { font-size: 1rem; }
+      .hero h1 { font-size: 36px; line-height: 44px; }
+      h2 { font-size: 28px; line-height: 36px; }
+      .hero-deck { font-size: 16px; line-height: 24px; }
       .stat-num { font-size: 1.8rem; }
       .nav-meta { font-size: 0.7rem; }
     }
