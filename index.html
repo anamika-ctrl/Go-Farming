@@ -54,15 +54,15 @@
     }
     .nav-brand {
       font-family: 'Lora', serif;
-      font-size: 1rem;
+      font-size: 1.35rem;
       color: var(--green);
       text-decoration: none;
       letter-spacing: 0.02em;
     }
     .nav-meta {
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       color: var(--ink-light);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
     }
 
     /* ── READING COLUMN ── */
@@ -79,57 +79,64 @@
 
     /* ── HERO ── */
     .hero {
-      padding: 140px var(--side-margin) 80px;
+      padding: 150px var(--side-margin) 60px;
       text-align: center;
-      max-width: 760px;
+      max-width: 840px;
       margin: 0 auto;
     }
     .hero-tag {
       display: inline-block;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       color: var(--green-mid);
       background: var(--green-pale);
       border: 1px solid var(--green-light);
-      padding: 5px 14px;
+      padding: 6px 16px;
       border-radius: 100px;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
     .hero h1 {
       font-family: 'Lora', serif;
-      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 600;
-      line-height: 1.1;
+      line-height: 1.15;
       color: var(--ink);
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     .hero h1 em {
       color: var(--green);
       font-style: italic;
     }
     .hero-deck {
-      font-size: 1.15rem;
-      font-weight: 300;
+      font-size: 1.05rem;
+      font-weight: 400;
       color: var(--ink-light);
-      line-height: 1.8;
-      margin-bottom: 48px;
-      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 680px;
       margin-left: auto;
       margin-right: auto;
     }
     .hero-credits {
       display: flex;
-      justify-content: center;
-      gap: 40px;
+      justify-content: space-between;
+      gap: 20px;
       flex-wrap: wrap;
       border-top: 1px solid var(--border);
       padding-top: 28px;
+      max-width: 720px;
+      margin: 0 auto;
     }
-    .credit { display: flex; flex-direction: column; gap: 3px; }
-    .credit-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-light); }
-    .credit-value { font-size: 0.9rem; font-weight: 500; color: var(--ink); }
+    .credit { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 6px; 
+      align-items: center; 
+    }
+    .credit-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-light); }
+    .credit-value { font-size: 0.95rem; font-weight: 500; color: var(--ink); }
 
     /* ── HERO SCREENS STRIP ── */
     .screens-strip {
@@ -404,7 +411,7 @@
       .pull-quote { padding: 20px 20px; margin: 32px 0; }
       .challenge { padding: 24px 20px; margin: 40px 0; }
       .challenge-num { left: 16px; top: -14px; }
-      .hero-credits { gap: 20px; }
+      .hero-credits { justify-content: center; gap: 32px; }
     }
 
     @media (max-width: 480px) {
@@ -427,7 +434,7 @@
 <!-- ── HERO ── -->
 <div class="hero fade">
   <span class="hero-tag">Self-Initiated · Figma · 3 Weeks</span>
-  <h1>Turning surplus harvests<br>into <em>neighbourhood commerce</em></h1>
+  <h1>Turning surplus harvests into<br><em>neighbourhood commerce</em></h1>
   <p class="hero-deck">A hyper-local platform that connects home growers with nearby buyers — because fresh food was already being shared informally. It just needed a home.</p>
   <div class="hero-credits">
     <div class="credit"><span class="credit-label">Role</span><span class="credit-value">UI/UX Designer</span></div>
