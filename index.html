@@ -138,12 +138,128 @@
     .credit-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-light); }
     .credit-value { font-size: 1.25rem; font-weight: 600; color: var(--ink); }
 
+    /* ── PROBLEM OVERVIEW (Added Section) ── */
+    .problem-overview {
+      padding: 0 var(--side-margin) 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .problem-overview h2 {
+      text-align: center;
+      font-family: 'Lora', serif;
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 40px;
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      text-align: left;
+    }
+    .problem-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 36px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.03);
+    }
+    .problem-card h3 {
+      margin-top: 0;
+      margin-bottom: 24px;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .problem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .problem-list li {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      position: relative;
+      padding-left: 24px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .problem-list li::before {
+      content: "—";
+      color: var(--green);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    /* ── RESEARCH COMPETITOR ANALYSIS ── */
+    .research-overview {
+      padding: 20px var(--side-margin) 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .research-overview h2 {
+      text-align: center;
+      font-family: 'Lora', serif;
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 40px;
+    }
+    .comp-table {
+      width: 100%;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.03);
+    }
+    .comp-header {
+      display: grid;
+      grid-template-columns: 1.5fr 2fr 2.5fr;
+      background: var(--green-pale);
+      padding: 20px 24px;
+      font-weight: 600;
+      color: var(--green);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    .comp-row {
+      display: grid;
+      grid-template-columns: 1.5fr 2fr 2.5fr;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      gap: 20px;
+      align-items: start;
+    }
+    .comp-row:last-child {
+      border-bottom: none;
+    }
+    .comp-name {
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+    .comp-desc, .comp-gap {
+      color: var(--ink-light);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .mobile-label {
+      display: none;
+    }
+
     /* ── HERO SCREENS STRIP ── */
     .screens-strip {
       display: flex;
       justify-content: center;
       gap: 16px;
-      padding: 48px var(--side-margin) 80px;
+      padding: 20px var(--side-margin) 80px;
     }
     .phone-wrap {
       flex-shrink: 0;
@@ -400,6 +516,14 @@
 
     /* ── RESPONSIVE STYLES ── */
     @media (max-width: 768px) {
+      .problem-grid { grid-template-columns: 1fr; gap: 24px; }
+      .problem-card { padding: 32px 28px; }
+      
+      .comp-header { display: none; }
+      .comp-row { grid-template-columns: 1fr; gap: 12px; padding: 24px 28px; }
+      .comp-name { font-size: 1.2rem; margin-bottom: 8px; color: var(--green); }
+      .mobile-label { display: inline-block; font-weight: 600; color: var(--ink); margin-right: 6px; }
+
       .stat-row { grid-template-columns: 1fr; }
       .screens-pair { grid-template-columns: 1fr; max-width: 320px; }
       .impact-box { padding: 40px 32px; }
@@ -412,8 +536,9 @@
       nav { padding: 16px var(--side-margin); }
       .hero { padding-top: 100px; padding-bottom: 60px; }
       .hero h1 { font-size: 44px; line-height: 52px; }
-      h2 { font-size: 32px; line-height: 40px; }
+      h2, .problem-overview h2 { font-size: 32px; line-height: 40px; }
       p, .hero-deck { font-size: 18px; line-height: 28px; }
+      .problem-overview { padding-bottom: 40px; }
       .screens-strip .phone-wrap:nth-child(1),
       .screens-strip .phone-wrap:nth-child(3) { display: none; }
       .impact-box { padding: 32px 24px; }
@@ -426,7 +551,7 @@
     @media (max-width: 480px) {
       nav { flex-direction: column; gap: 8px; align-items: center; }
       .hero h1 { font-size: 36px; line-height: 44px; }
-      h2 { font-size: 28px; line-height: 36px; }
+      h2, .problem-overview h2 { font-size: 28px; line-height: 36px; }
       .hero-deck { font-size: 16px; line-height: 24px; }
       .stat-num { font-size: 1.8rem; }
       .nav-meta { font-size: 0.7rem; }
@@ -453,16 +578,94 @@
   </div>
 </div>
 
+<!-- ── THE PROBLEM OVERVIEW ── -->
+<div class="problem-overview fade">
+  <h2>The Problem</h2>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <h3>🌱 Growers</h3>
+      <ul class="problem-list">
+        <li>Home gardeners often grow more fruits and vegetables than their families can consume, leaving excess produce to go to waste.</li>
+        <li>Farmers frequently sell their harvest to middlemen at low prices, while the same produce is later sold to consumers at significantly higher prices.</li>
+        <li>They have limited access to a platform where they can directly connect with local buyers.</li>
+        <li>New home-based businesses struggle to reach customers beyond their personal network. Selling through WhatsApp or social media requires constant sharing and has limited visibility.</li>
+      </ul>
+    </div>
+    <div class="problem-card">
+      <h3>🛒 Buyers</h3>
+      <ul class="problem-list">
+        <li>Fresh, naturally grown produce is often expensive or difficult to find.</li>
+        <li>Many commercially available fruits are grown for shelf life rather than taste, often relying on chemicals and preservatives.</li>
+        <li>Buyers have no easy way to purchase directly from local growers they can trust.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── RESEARCH ── -->
+<div class="research-overview fade">
+  <h2>Research</h2>
+  <div class="comp-table">
+    <div class="comp-header">
+      <div>Platform</div>
+      <div>What it does</div>
+      <div>Missing compared to GoFarming</div>
+    </div>
+    
+    <div class="comp-row">
+      <div class="comp-name">Facebook Marketplace</div>
+      <div class="comp-desc"><span class="mobile-label">What it does:</span>People sell almost anything locally</div>
+      <div class="comp-gap"><span class="mobile-label">Missing:</span>Not focused on home-grown produce, no trust around growers</div>
+    </div>
+    
+    <div class="comp-row">
+      <div class="comp-name">OLX</div>
+      <div class="comp-desc"><span class="mobile-label">What it does:</span>Buy and sell locally</div>
+      <div class="comp-gap"><span class="mobile-label">Missing:</span>Too generic, not for food or small growers</div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-name">Etsy</div>
+      <div class="comp-desc"><span class="mobile-label">What it does:</span>Handmade products, jams, crafts</div>
+      <div class="comp-gap"><span class="mobile-label">Missing:</span>Less suited for fresh produce and hyperlocal sales</div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-name">Farmizen</div>
+      <div class="comp-desc"><span class="mobile-label">What it does:</span>Consumers buy directly from farms</div>
+      <div class="comp-gap"><span class="mobile-label">Missing:</span>Focuses on professional farms, not individual home gardeners</div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-name">BigHaat</div>
+      <div class="comp-desc"><span class="mobile-label">What it does:</span>Agricultural products and farmer services</div>
+      <div class="comp-gap"><span class="mobile-label">Missing:</span>Doesn't help people sell homemade products</div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-name">WhatsApp</div>
+      <div class="comp-desc"><span class="mobile-label">What it does:</span>Many people sell through status and groups</div>
+      <div class="comp-gap"><span class="mobile-label">Missing:</span>Limited reach beyond existing contacts</div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-name">Instagram</div>
+      <div class="comp-desc"><span class="mobile-label">What it does:</span>Small businesses market through posts and stories</div>
+      <div class="comp-gap"><span class="mobile-label">Missing:</span>Discovery depends on followers and algorithms</div>
+    </div>
+  </div>
+</div>
+
 <!-- Onboarding screens strip -->
 <div class="screens-strip fade">
   <div class="phone-wrap">
-    <img  src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/324a1e9b2adbd8d47d322335a5b6dac6a22cba98/walkthrough-1.png" />
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/4eefb098a85e1540157807531beeb0d3f9045316/images/chat_mobile%20view.PNG" alt="Chat mobile view" />
   </div>
   <div class="phone-wrap">
-    <img src="walkthrough-1.png" alt="Got Extra Vegetables screen" />
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/4eefb098a85e1540157807531beeb0d3f9045316/images/home-mobile%20view.PNG" alt="Home mobile view" />
   </div>
   <div class="phone-wrap">
-    <img src="walkthrough-2.png" alt="Share with Your Neighbour screen" />
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/4eefb098a85e1540157807531beeb0d3f9045316/images/mylist_mobile%20view.PNG" alt="My list mobile view" />
   </div>
 </div>
 
@@ -492,10 +695,10 @@
   </div>
 </div>
 
-<!-- ── SECTION 2: THE PROBLEM ── -->
+<!-- ── SECTION 2: THE PROBLEM (Deep Dive) ── -->
 <div class="section">
   <div class="col fade">
-    <div class="section-marker">02 &nbsp; The Problem</div>
+    <div class="section-marker">02 &nbsp; The Gap</div>
     <h2>The informal economy existed. The infrastructure didn't.</h2>
     <p>I started by talking to people — 5 home growers and 3 buyers in Guwahati and Bengaluru. The same story came up again and again.</p>
 
@@ -519,7 +722,7 @@
 
   <!-- Home screen inline -->
   <figure class="inline-screen fade">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/169f3e29620123b5b59eea793a1c6bc93d6f287e/home.jpg"/>
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/169f3e29620123b5b59eea793a1c6bc93d6f287e/home.jpg" alt="Home Screen"/>
     <figcaption>Home screen — location-anchored, category-first, with distance visible on every card.</figcaption>
   </figure>
 
@@ -536,7 +739,7 @@
 
   <!-- Profile screen inline -->
   <figure class="inline-screen fade">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/0e9f2f310e47b8ceaa8cb4acc37f677defa80794/Profile.jpg" />
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/0e9f2f310e47b8ceaa8cb4acc37f677defa80794/Profile.jpg" alt="Profile Screen" />
     <figcaption>Seller profile — verified badge, star rating, past listings, and embedded location map.</figcaption>
   </figure>
 
@@ -547,7 +750,7 @@
 
   <!-- Notifications inline -->
   <figure class="inline-screen fade">
-    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/request.jpg" />
+    <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/request.jpg" alt="Notifications Screen"/>
     <figcaption>Notifications — every trade event surfaced clearly, grouped by date.</figcaption>
   </figure>
 </div>
@@ -579,15 +782,15 @@
   <!-- Add item screens pair -->
   <div class="screens-pair fade">
     <figure>
-      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/myAd.jpg" />
+      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/myAd.jpg" alt="My Ad Screen" />
       <figcaption>Info tab — title, price, availability window.</figcaption>
     </figure>
     <figure>
-      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/addItem-info.jpg" />
+      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/addItem-info.jpg" alt="Add Item Info" />
       <figcaption>Upload tab — photo tips, cover image selection.</figcaption>
     </figure>
     <figure>
-      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/addItem-upload.jpg" />
+      <img src="https://raw.githubusercontent.com/anamika-ctrl/Go-Farming/11136d0a912e43ff9cb8a3b97f4bafccf3cdc7c7/addItem-upload.jpg" alt="Add Item Upload" />
       <figcaption>Upload tab — photo tips, cover image selection.</figcaption>
     </figure>
   </div>
