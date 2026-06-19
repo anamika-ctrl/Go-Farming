@@ -510,6 +510,37 @@
       color: var(--ink-light);
     }
 
+    /* ── FLOATING NAV ── */
+    .floating-nav {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      border-radius: 100px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+      z-index: 1000;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+    .floating-nav a {
+      text-decoration: none;
+      color: var(--ink-light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 8px 20px;
+      border-radius: 100px;
+      transition: all 0.2s ease;
+    }
+    .floating-nav a:hover {
+      background: var(--bg);
+      color: var(--ink);
+    }
+
     /* ── FADE IN ── */
     .fade { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade.in { opacity: 1; transform: none; }
@@ -555,6 +586,21 @@
       .hero-deck { font-size: 16px; line-height: 24px; }
       .stat-num { font-size: 1.8rem; }
       .nav-meta { font-size: 0.7rem; }
+      
+      .floating-nav {
+        width: 90%;
+        max-width: 400px;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 6px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .floating-nav::-webkit-scrollbar { display: none; }
+      .floating-nav a {
+        white-space: nowrap;
+        padding: 8px 14px;
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
@@ -579,7 +625,7 @@
 </div>
 
 <!-- ── THE PROBLEM OVERVIEW ── -->
-<div class="problem-overview fade">
+<div id="problem" class="problem-overview fade">
   <h2>The Problem</h2>
   <div class="problem-grid">
     <div class="problem-card">
@@ -603,7 +649,7 @@
 </div>
 
 <!-- ── RESEARCH ── -->
-<div class="research-overview fade">
+<div id="stack" class="research-overview fade">
   <h2>Research</h2>
   <div class="comp-table">
     <div class="comp-header">
@@ -713,7 +759,7 @@
 </div>
 
 <!-- ── SECTION 3: HOW I FIXED IT ── -->
-<div class="section">
+<div id="solution" class="section">
   <div class="col fade">
     <div class="section-marker">03 &nbsp; How I Fixed It</div>
     <h2>Design decisions that directly addressed what users needed.</h2>
@@ -806,7 +852,7 @@
 </div>
 
 <!-- ── SECTION 5: IMPACT ── -->
-<div class="section">
+<div id="roadmap" class="section">
   <div class="col fade">
     <div class="section-marker">05 &nbsp; Contribution to Society</div>
     <h2>What this product could do at scale.</h2>
@@ -826,7 +872,7 @@
 </div>
 
 <!-- ── SECTION 6: REFLECTION ── -->
-<div class="section">
+<div id="learnings" class="section">
   <div class="col fade">
     <div class="section-marker">06 &nbsp; Reflection</div>
     <h2>What I learned, and what I'd do differently.</h2>
@@ -847,6 +893,15 @@
 <footer>
   <p>Go Farming — UI/UX Case Study &nbsp;·&nbsp; Self-Initiated &nbsp;·&nbsp; Designed by Anamika &nbsp;·&nbsp; 2026</p>
 </footer>
+
+<!-- ── FLOATING NAV ── -->
+<div class="floating-nav">
+  <a href="#problem">Problem</a>
+  <a href="#solution">Solution</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#stack">Stack</a>
+  <a href="#learnings">Learnings</a>
+</div>
 
 <script>
   const io = new IntersectionObserver(entries => {
